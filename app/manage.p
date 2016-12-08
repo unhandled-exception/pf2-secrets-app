@@ -26,6 +26,10 @@
     $.formWidgets[bootstrap4]
   ]
 
+  ^app.assignCommand[sql][commands/sql.p@SQLCommand][
+    $.sql[$csql]
+  ]
+
   $result[^app.run[]]
 
 #--------------------------------------------------------------------------------------------------
