@@ -1,2 +1,4 @@
 User-agent: *
-Host: site.ru
+Host: secrets.unhandled-exception.ru
+Disallow: /api
+Disallow: /show
