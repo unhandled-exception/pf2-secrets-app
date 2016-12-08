@@ -5,27 +5,33 @@ pf2/lib/web/helpers/antiflood.p
 pf2/lib/web/middleware.p
 
 @auto[]
-  $MAIN:ADMIN_EMAIL[admin@site.ru]
+#  $MAIN:ADMIN_EMAIL[admin@site.ru]
 
   $MAIN:CONF[
-    $.host[site.ru]
-    $.siteName[Mega site]
+    $.host[secrets.unhandled-exception.ru]
+    $.siteName[Secrets.unhandled-exception.ru]
 
-    $.connectString[mysql://test:password@localhost/test]
-
-#   Все секретные ключи и пароли надо сгенерировать для каждого проекта отдельно.
-#   В unix/linux ключи можно сгенерировать через urandom:
-#   > python3 -c "import os, base64; print(base64.b64encode(os.urandom(24)))"
-#   И взять символы из результаты работы команды между кавычками.
-    $.secretKey[--сгенерировать--]
-    $.cryptKey[--сгенерировать--]
+#    $.connectString[mysql://secrets_ue:...@localhost]
+#    $.secretKey[--сгенерировать--]
+#    $.cryptKey[--сгенерировать--]
 
     $.antiFlood[
       $.storage[
-        $.password[--сгенерировать--]
+#        $.password[--сгенерировать--]
         $.expires(60*60*8)
       ]
     ]
+
+#  Чтобы не держать пароли в публичном репозитории я вынес строки с паролями в local_config.p
+#  Многоточия заменил на пароли, сгенерированные командой:
+#  > python3 -c "import os, base64; print(base64.b64encode(os.urandom(32)))"
+
+#  ./local_config.p
+#  @auto[]
+#    $CONF.secretKey[...]
+#    $CONF.cryptKey[...]
+#    $CONF.antiFlood.storage.password[...]
+#    $CONF.connectString[mysql://secrets_ue:...@localhost/secrets_ue]
 
     $.security[
       $.xframeOptions(true)
@@ -36,10 +42,6 @@ pf2/lib/web/middleware.p
       $.sslRedirect(true)
 #       $.sslRedirectExempt[]
     ]
-
-#     $.yandexMetrica[
-#       $.counterID[]
-#     ]
 
 #   Функции сайта
     $.features[
