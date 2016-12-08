@@ -6,9 +6,41 @@
     <div class="row">
       <div class="col-sm-12">
         <h1>$title</h1>
-        <p>Добро пожаловать на сайт.</p>
+        ^form[]
       </div>
     </div>
   </div>
 
   ^footer[]
+
+@form[aFormData;aOptions]
+  ^cleanMethodArgument[aFormData;aOptions]
+  <form action="" method="post" class="form-horizontal form-default">
+    <div class="form-group row">
+      <label for="f-data" class="col-sm-3 col-form-label">Текст</label>
+      <div class="col-sm-9">
+        <textarea name="data" id="f-data" class="form-control" rows="7" placeholder="" />$aFormData.data</textarea>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="f-pinHash" class="col-sm-3 col-form-label">Пин-код</label>
+      <div class="col-sm-9">
+        <input type="text" name="pinHash" id="f-pinHash" value="$aFormData.pinHash" class="form-control" placeholder="" />
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="f-expiredAt" class="col-sm-3 col-form-label">Время жизни сообщения</label>
+      <div class="col-sm-9">
+        <input type="text" name="expiredAt" id="f-expiredAt" value="$aFormData.expiredAt" class="form-control" placeholder="" />
+      </div>
+    </div>
+
+    ^antiFlood.field[]
+    <div class="form-group row">
+      <div class="offset-sm-3 col-sm-9">
+        <input type="submit" id="f-sub" value="Сохранить" class="btn btn-primary" />
+      </div>
+    </div>
+  </form>

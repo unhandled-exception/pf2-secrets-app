@@ -23,6 +23,7 @@
   ][
     $.sql[$csql]
     $.core[$core]
+    $.formWidgets[bootstrap4]
   ]
 
   $result[^app.run[]]

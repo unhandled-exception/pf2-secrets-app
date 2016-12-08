@@ -61,10 +61,10 @@ locals
 
   ^self.addFields[
     $.messageID[$.dbField[message_id] $.primary(true) $.widget[none]]
-    $.data[$.label[]]
-    $.pinHash[$.dbField[pin_hash] $.label[]]
-    $.expiredAt[$.dbField[expired_at] $.label[]]
-    $.errors[$.processor[uint] $.default[0] $.label[]]
+    $.data[$.label[Текст] $.widget[textarea]]
+    $.pinHash[$.dbField[pin_hash] $.label[Пин-код]]
+    $.expiredAt[$.dbField[expired_at] $.label[Время жизни сообщения]]
+    $.errors[$.processor[uint] $.default[0] $.label[] $.widget[none]]
     $.createdAt[$.dbField[created_at] $.processor[auto_now] $.skipOnUpdate(true) $.widget[none]]
     $.updatedAt[$.dbField[updated_at] $.processor[auto_now] $.widget[none]]
   ]
