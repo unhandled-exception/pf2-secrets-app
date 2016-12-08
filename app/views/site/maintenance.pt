@@ -1,0 +1,13 @@
+#@base /_html.pt
+#@import /_blocks/nav_blocks.pt
+
+@body[]
+  <div class="container">
+    <div class="row">
+      <h1>$title</h1>
+      <p class="lead">Сайт на техобслуживании. Разработчики обновляют программное обеспечение на сервере. Очень скоро сайт заработает снова. :)</p>
+    </div>
+  </div>
+
+  ^footer[]
+

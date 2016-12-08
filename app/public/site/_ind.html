@@ -1,0 +1,6 @@
+@USE
+config/app_config.p
+
+@main[][locals]
+  $app[^create_app[$CONF;$.isDebug(^isDeveloper[])]]
+  ^app.run[]

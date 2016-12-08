@@ -1,0 +1,8 @@
+*.bak
+logs/
+*.sublime-*
+temp/
+*.log
+vendor/pf2
+app/public/data
+app/config/local_config.p

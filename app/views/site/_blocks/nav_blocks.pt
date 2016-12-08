@@ -1,0 +1,11 @@
+@footer[aOptions]
+  <div class="clearfix"></div>
+  <footer class="footer">
+    <div class="container">
+      <div class="row">
+        <div class="footer-copyrights col-sm-12">
+          <p>© 2016 Site Owner</p>
+        </div>
+      </div>
+    </div>
+  </footer>

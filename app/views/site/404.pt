@@ -1,0 +1,10 @@
+#@base /_html.pt
+#@import /_blocks/nav_blocks.pt
+
+@body[]
+  ^main_nav[]
+  <div class="container">
+    <h1>$title</h1>
+    <p>Неправильно набран адрес, или такой страницы на сайте больше не существует. </p>
+  </div>
+  ^footer[]
