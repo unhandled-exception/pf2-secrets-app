@@ -24,6 +24,8 @@ pfModelModule
     $.serializer[base64]
   ]
 
+  ^assignModule[messages;CoreMessages]
+
 #--------------------------------------------------------------------------------------------------
 
 @CLASS
@@ -38,3 +40,31 @@ pfSQLSecurityCrypt
   ^cleanMethodArgument[]
   ^BASE:create[$aOptions]
   ^pfModelChainMixin:mixin[$self;^hash::create[$aOptions] $.ignoreSQLFields(true)]
+
+#--------------------------------------------------------------------------------------------------
+
+@CLASS
+CoreMessages
+
+@BASE
+pfModelTable
+
+@OPTIONS
+locals
+
+@create[aOptions]
+## aOptions.tableName
+  ^BASE:create[^hash::create[$aOptions]
+    $.tableName[^ifdef[$aOptions.tableName]{messages}]
+#    $.allAsTable(true)
+  ]
+
+  ^self.addFields[
+    $.messageID[$.dbField[message_id] $.primary(true) $.widget[none]]
+    $.data[$.label[]]
+    $.pinHash[$.dbField[pin_hash] $.label[]]
+    $.expiredAt[$.dbField[expired_at] $.label[]]
+    $.errors[$.processor[uint] $.default[0] $.label[]]
+    $.createdAt[$.dbField[created_at] $.processor[auto_now] $.skipOnUpdate(true) $.widget[none]]
+    $.updatedAt[$.dbField[updated_at] $.processor[auto_now] $.widget[none]]
+  ]
