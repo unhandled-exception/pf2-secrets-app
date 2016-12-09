@@ -56,7 +56,7 @@ pf2/lib/web/middleware.p
     $.minPinSize(5)
 
 #   Максимальное количество попыток ввода пин-кода
-    $.maxPinAttempts(3)
+    $.maxPinAttempts(10)
 
   ]
 

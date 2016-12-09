@@ -1,0 +1,11 @@
+#@base /_html.pt
+#@import /_blocks/nav_blocks.pt
+
+@body[]
+  <div class="container">
+    <h1>$title</h1>
+    <p>Сообщение доступно по ссылке <a href="$messageLink">$messageLink</a> до ${messageExpiredAt}.</p>
+    <p><a href="^linkTo[/]" class="btn btn-secondary">Новое сообщение</a></p>
+  </div>
+
+  ^footer[]

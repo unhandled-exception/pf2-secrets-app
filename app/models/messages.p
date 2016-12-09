@@ -31,7 +31,7 @@ locals
   $aData[^self.cleanFormData[$aData]]
   ^CSQL.transaction{
     $result.messageID[^self.new[
-      $.pin[$aData.pinHash]
+      $.pinHash[$aData.pinHash]
       $.data[^self.encryptDataField[$aData.data;$aData.pinHash]]
       $.expiredAt[^date::create($_now + $aData.expiredAt/(24*60))]
     ]]
@@ -39,6 +39,51 @@ locals
     $lMessage[^self.get[$result.messageID]]
     $result.expiredAt[$lMessage.expiredAt]
     $result.token[$lMessage.token]
+  }
+
+@load[aToken;aPin] -> [$.text $.errors]
+## Достает сообщение из базы данных, расшифровывает, проверяет пин-код
+  $result[]
+  $lError[]
+  ^CSQL.transaction{
+    ^try{
+#     Достаем сообщеине и блокируем строку в базе данных
+      $lMessage[^self.one[
+        $.token[$aToken]
+        $.tail[for update]
+        $.[expiredAt >][^date::now[]]
+      ]]
+      ^if(!$lMessage){^throw[message.not.found;Сообщение не найдено]}
+
+      ^if($lMessage.pinHash ne ^_makePinHash[$aPin]){
+#       Неверный пин-код
+        $lMessage.errors($lMessage.errors + 1)
+        ^if($lMessage.errors < $core.conf.maxPinAttempts){
+          ^self.modify[$lMessage.messageID;
+            $.errors($lMessage.errors)
+          ]
+          ^throw[message.invalid.pin;Введен неверный пин-код]
+        }{
+           ^self.delete[$lMessage.messageID]
+           ^throw[message.deleted;Сообщение удалено. Несколько раз введен неверный пин-код.]
+         }
+      }
+
+#     Расшифровываем и удаляем сообщение из базы данных
+      $result[$.text[^self.decryptDataField[$lMessage.data;$aPin]]]
+      ^self.delete[$lMessage.messageID]
+    }{
+        ^if(^exception.type.match[^^message\.][n]){
+          $exception.handled(true)
+          $result[
+            $.error[
+              $.type[$exception.type]
+              $.source[$exception.source]
+              $.comment[$exception.comment]
+            ]
+          ]
+        }
+     }
   }
 
 @encryptDataField[aData;aPin] -> [string]
@@ -57,7 +102,10 @@ locals
   $result[]
   ^switch[$aField.processor]{
     ^case[_pin]{
-      $result['^taint[^core.security.digest[$aValue]]']
+      $result['^taint[^_makePinHash[$aValue]]']
     }
     ^case[DEFAULT]{$result[^BASE:fieldValue[$aField;$aValue]]}
   }
+
+@_makePinHash[aPin]
+  $result[^core.security.digest[$aPin]]

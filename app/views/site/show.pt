@@ -1,0 +1,51 @@
+#@base /_html.pt
+#@import /_blocks/nav_blocks.pt
+
+@body[]
+  <div class="container">
+    <h1>$title</h1>
+    ^if($message && ^message.contains[text]){
+      <div class="row">
+        <div class="col-sm-12">
+          <textarea rows="10" class="form-control">$message.text</textarea>
+        </div>
+      </div>
+    }{
+       ^switch[$message.error.type]{
+         ^case[message.not.found]{
+           <p class="text-danger">$message.error.source</p>
+         }
+         ^case[message.deleted]{
+           <p class="text-danger">$message.error.source</p>
+         }
+         ^case[DEFAULT]{
+           ^form[$messageForm;$.error[$message.error]]
+         }
+       }
+     }
+  </div>
+
+  ^footer[]
+
+@form[aFormData;aOptions]
+## aOptions.action[]
+## aOptions.error
+  ^cleanMethodArgument[aFormData;aOptions]
+  $lInvalidPin($aOptions.error.type eq "message.invalid.pin")
+  <form action="$aOptions.action" method="post" class="form-horizontal form-default">
+    <div class="form-group row ^if($lInvalidPin){has-danger}">
+      <label for="f-pin" class="col-sm-3 col-form-label">Пин-код</label>
+      <div class="col-sm-9">
+        <input type="text" name="pin" id="f-pin" value="$aFormData.pin" class="form-control" placeholder="" />
+        ^if($lInvalidPin){
+          <div class="form-control-feedback">$message.error.source</div>
+        }
+      </div>
+    </div>
+    ^antiFlood.field[]
+    <div class="form-group row">
+      <div class="offset-sm-3 col-sm-9">
+        <input type="submit" id="f-sub" value="Показать сообщение" class="btn btn-primary" />
+      </div>
+    </div>
+  </form>
