@@ -5,6 +5,9 @@
   ^CLASS_PATH.append{/../vendor/}
 
   ^use[config/app_config.p]
+  ^pfClass:unsafe{
+    ^use[config/local_config.p]
+  }
 
   $csql[^pfSQLConnection::create[$CONF.connectString;
     $.enableMemoryCache(true)

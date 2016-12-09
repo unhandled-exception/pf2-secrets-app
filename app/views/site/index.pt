@@ -6,7 +6,9 @@
     <div class="row">
       <div class="col-sm-12">
         <h1>$title</h1>
-        ^form[]
+        ^form[$formData;
+          $.action[^linkTo[save]]
+        ]
       </div>
     </div>
   </div>
@@ -14,8 +16,9 @@
   ^footer[]
 
 @form[aFormData;aOptions]
+## aOptions.action[]
   ^cleanMethodArgument[aFormData;aOptions]
-  <form action="" method="post" class="form-horizontal form-default">
+  <form action="$aOptions.action" method="post" class="form-horizontal form-default">
     <div class="form-group row">
       <label for="f-data" class="col-sm-3 col-form-label">Текст</label>
       <div class="col-sm-9">
