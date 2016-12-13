@@ -19,6 +19,7 @@ locals
   ]
   $self.conf[$aOptions.conf]
 
+  ^router.assignModule[api/v1;controllers/site/api.p@APIController]
   ^router.assign[show/:token;show]
 
 @onINDEX[aRequest]
