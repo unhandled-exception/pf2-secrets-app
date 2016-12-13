@@ -30,7 +30,7 @@ locals
   $result[^self.aggregate[
     count(*) as total;
     sum(case when $self.expiredAt <= '^self._now.sql-string[]' then 1 else 0 end) as expired;
-    sum(case when $self.expiredAt > '^slef._now.sql-string[]' then 1 else 0 end) as active;
+    sum(case when $self.expiredAt > '^self._now.sql-string[]' then 1 else 0 end) as active;
     $.asTable(true)
   ]]
   ^if($result){
