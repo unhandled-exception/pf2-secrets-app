@@ -18,4 +18,64 @@
 
 ## API
 
-На сайте сделаем REST API для работы с сообщениями.
+Сайт предоставляет простое REST API для сохранения и загрузки сообщений.
+
+### Save message
+
+`POST /v1/message`, body - `{"message":"some top secret info", "exp": 15, "pin": "12345"}`
+- `exp` expire in N minutes
+- `pin` fixed-size pin code
+
+```
+    $ http POST https://secrets.unhandled-exception.ru/api/v1/message pin=12345 message=testtest-12345678 exp=15
+
+    HTTP/1.1 201 Created
+
+    {
+     "exp": "2016-06-25T13:33:45.11847278-05:00",
+     "token": "f1acfe04-277f-4016-518d-16c312ab84b5"
+    }
+```
+
+### Load message
+
+`GET /v1/message/:token/:pin`
+
+```
+    $ http GET https://secrets.unhandled-exception.ru/api/v1/message/6ceab760-3059-4a52-5670-649509b128fc/12345
+
+    HTTP/1.1 200 OK
+
+    {
+     "token": "6ceab760-3059-4a52-5670-649509b128fc",
+     "message": "testtest-12345678"
+    }
+```
+
+### ping
+
+`GET /v1/ping`
+
+```
+    $ http https://secrets.unhandled-exception.ru/api/v1/ping
+
+    HTTP/1.1 200 OK
+
+    pong
+```
+
+### Get params
+
+`GET /v1/params`
+
+```
+    $ http https://secrets.unhandled-exception.ru/api/v1/params
+
+    HTTP/1.1 200 OK
+
+    {
+        "max_exp_min": 15,
+        "max_pin_attempts": 3,
+        "min_pin_size": 5
+    }
+```
