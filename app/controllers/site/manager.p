@@ -51,12 +51,28 @@ locals
   ^if($aRequest.isPOST
     && ^self.antiFlood.validateRequest[$aRequest]
   ){
-    $lMessage[^core.messages.save[$aRequest.form]]
-    ^render[save.pt;
-      $.title[Сообщение зашифровали и сохранили]
-      $.messageLink[^aRequest.absoluteURL[^linkFor[show;$lMessage]]]
-      $.messageExpiredAt[$lMessage.expiredAt]
-    ]
+    ^try{
+      $lMessage[^core.messages.save[$aRequest]]
+      ^render[save.pt;
+        $.title[Сообщение зашифровали и сохранили]
+        $.messageLink[^aRequest.absoluteURL[^linkFor[show;$lMessage]]]
+        $.messageExpiredAt[$lMessage.expiredAt]
+      ]
+    }{
+       ^if(^exception.type.match[^^core\.messages\.][n]){
+         $exception.handled(true)
+         $lError[
+           $.type[$exception.type]
+           $.message[$exception.source]
+         ]
+       }
+       ^if($lError){
+         ^render[/index.pt;
+           $.error[$lError]
+           $.formData[$aRequest.form]
+         ]
+       }
+     }
   }{
      ^redirectTo[/]
    }

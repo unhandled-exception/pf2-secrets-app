@@ -8,6 +8,7 @@
         <h1>$title</h1>
         ^form[$formData;
           $.action[^linkTo[save]]
+          $.error[$error]
         ]
       </div>
     </div>
@@ -17,26 +18,33 @@
 
 @form[aFormData;aOptions]
 ## aOptions.action[]
+## aOptions.error
   ^cleanMethodArgument[aFormData;aOptions]
   <form action="$aOptions.action" method="post" class="form-horizontal form-default">
-    <div class="form-group row">
+    <div class="form-group row ^if($aOptions.error.type eq "core.messages.empty.data"){has-danger}">
       <label for="f-data" class="col-sm-3 col-form-label">Текст</label>
       <div class="col-sm-9">
         <textarea name="data" id="f-data" class="form-control" rows="7" placeholder="" />$aFormData.data</textarea>
+        ^if($aOptions.error.type eq "core.messages.empty.data"){
+          <div class="form-control-feedback">$aOptions.error.message</div>
+        }
       </div>
     </div>
 
-    <div class="form-group row">
+    <div class="form-group row ^if($aOptions.error.type eq "core.messages.invalid.pin"){has-danger}">
       <label for="f-pinHash" class="col-sm-3 col-form-label">Пин-код</label>
       <div class="col-sm-9">
         <input type="text" name="pinHash" id="f-pinHash" value="$aFormData.pinHash" class="form-control" placeholder="" />
+        ^if($aOptions.error.type eq "core.messages.invalid.pin"){
+          <div class="form-control-feedback">$aOptions.error.message</div>
+        }
       </div>
     </div>
 
     <div class="form-group row">
-      <label for="f-expiredAt" class="col-sm-3 col-form-label">Время жизни сообщения</label>
+      <label for="f-expiredAt" class="col-sm-3 col-form-label">Время жизни сообщения, мин</label>
       <div class="col-sm-9">
-        <input type="text" name="expiredAt" id="f-expiredAt" value="$aFormData.expiredAt" class="form-control" placeholder="" />
+        <input type="text" name="expiredAt" id="f-expiredAt" value="$aFormData.expiredAt" class="form-control" placeholder="$CONTROLLER.conf.defaultMessageTTL" />
       </div>
     </div>
 

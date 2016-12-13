@@ -27,11 +27,10 @@ locals
 
 @stat[] -> [$.total $.expired $.active]
   $result[$.total(0) $.expired(0) $.active(0)]
-  $lNow[^date::now[]]
   $result[^self.aggregate[
     count(*) as total;
-    sum(case when $self.expiredAt <= '^lNow.sql-string[]' then 1 else 0 end) as expired;
-    sum(case when $self.expiredAt > '^lNow.sql-string[]' then 1 else 0 end) as active;
+    sum(case when $self.expiredAt <= '^self._now.sql-string[]' then 1 else 0 end) as expired;
+    sum(case when $self.expiredAt > '^slef._now.sql-string[]' then 1 else 0 end) as active;
     $.asTable(true)
   ]]
   ^if($result){
@@ -45,7 +44,7 @@ locals
     $result[^self.aggregate[
       _fields(messageID, token, expiredAt)
     ][
-      $.[expiredAt <=][^date::now[]]
+      $.[expiredAt <=][$self._now]
       $.tail[for update]
       $.groupBy[$.messageID[asc]]
       $.asTable(true)
@@ -57,6 +56,31 @@ locals
     }
   }
 
+@cleanFormData[aFormData]
+## Проверяет форму перед сохранением в БД
+  $result[^BASE:cleanFormData[$aFormData]]
+
+# Проверяем сообщение
+  $result.data[^result.data.trim[]]
+  ^if(!def $result.data){
+    ^throw[core.messages.empty.data;Введите сообщение]
+  }
+
+# Проверяем дилну пин-кода
+  $result.pinHash[^result.pinHash.trim[]]
+  ^if(^result.pinHash.length[] < $core.conf.minPinSize){
+    ^throw[core.messages.invalid.pin;Длина пин-код не должна быть меньше $core.conf.minPinSize символов]
+  }
+
+# Обрабатываем TTL и выставляем дефолтное значение, если из формы пришла ерунда
+# Не стал делать исключение, чтобы показать для чего можно применять cleanFormData
+  $result.expiredAt[^result.expiredAt.trim[]]
+  $result.expiredAt(^math:abs(^result.expiredAt.double($core.conf.defaultMessageTTL)))
+  ^if($result.expiredAt <= 0){
+    $result.expiredAt($core.conf.defaultMessageTTL)
+  }
+  $result.expiredAt[^date::create($_now + $result.expiredAt/(24*60))]
+
 @save[aData] -> [$.messageID $.token $.expiredAt]
 ## Созраняет сообщение в базе данных
   $result[^hash::create[]]
@@ -65,7 +89,7 @@ locals
     $result.messageID[^self.new[
       $.pinHash[$aData.pinHash]
       $.data[^self.encryptDataField[$aData.data;$aData.pinHash]]
-      $.expiredAt[^date::create($_now + $aData.expiredAt/(24*60))]
+      $.expiredAt[$aData.expiredAt]
     ]]
 
     $lMessage[^self.get[$result.messageID]]
