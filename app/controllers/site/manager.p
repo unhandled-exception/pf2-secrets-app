@@ -35,7 +35,7 @@ locals
 @onShow[aRequest]
   $self.title[Прочитать сообщение]
   ^if($aRequest.isPOST
-#     && ^self.antiFlood.validateRequest[$aRequest]
+    && ^self.antiFlood.validateRequest[$aRequest]
   ){
      $lMessage[^core.messages.load[$aRequest.token;$aRequest.pin]]
      ^switch[$lMessage.error.type]{
@@ -49,7 +49,7 @@ locals
 
 @onSave[aRequest]
   ^if($aRequest.isPOST
-#     && ^self.antiFlood.validateRequest[$aRequest]
+    && ^self.antiFlood.validateRequest[$aRequest]
   ){
     $lMessage[^core.messages.save[$aRequest.form]]
     ^render[save.pt;

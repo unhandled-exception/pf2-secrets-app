@@ -15,7 +15,7 @@ locals
   ]
 
   ^self.addFields[
-    $.messageID[$.dbField[message_id] $.primary(true) $.widget[none]]
+    $.messageID[$.plural[messages] $.dbField[message_id] $.primary(true) $.widget[none]]
     $.token[$.label[] $.processor[uid] $.widget[none]]
     $.data[$.label[Текст] $.widget[textarea]]
     $.pinHash[$.dbField[pin_hash] $.label[Пин-код] $.processor[_pin]]
@@ -24,6 +24,38 @@ locals
     $.createdAt[$.dbField[created_at] $.processor[auto_now] $.skipOnUpdate(true) $.widget[none]]
     $.updatedAt[$.dbField[updated_at] $.processor[auto_now] $.widget[none]]
   ]
+
+@stat[] -> [$.total $.expired $.active]
+  $result[$.total(0) $.expired(0) $.active(0)]
+  $lNow[^date::now[]]
+  $result[^self.aggregate[
+    count(*) as total;
+    sum(case when $self.expiredAt <= '^lNow.sql-string[]' then 1 else 0 end) as expired;
+    sum(case when $self.expiredAt > '^lNow.sql-string[]' then 1 else 0 end) as active;
+    $.asTable(true)
+  ]]
+  ^if($result){
+    $result[$result.fields]
+  }
+
+@cleanup[] -> [table: messageID, token, expiredAt]
+## Удаляет из базы данных все «устаревшие» сообщения
+  $result[]
+  ^CSQL.transaction{
+    $result[^self.aggregate[
+      _fields(messageID, token, expiredAt)
+    ][
+      $.[expiredAt <=][^date::now[]]
+      $.tail[for update]
+      $.groupBy[$.messageID[asc]]
+      $.asTable(true)
+    ]]
+    ^if($result){
+      ^self.deleteAll[
+        $.messages[$result]
+      ]
+    }
+  }
 
 @save[aData] -> [$.messageID $.token $.expiredAt]
 ## Созраняет сообщение в базе данных
