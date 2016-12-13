@@ -16,6 +16,8 @@ locals
 
   $self._defaultResponseType[json]
 
+  ^router.assign[message/:token/:pin;message]
+
 @postJSON[aResponse]
   $result[$aResponse]
   $result.contentType[application/json]
@@ -29,9 +31,54 @@ locals
   $result[
     $.status[404]
     $.body[
-      $.message[Resource not found.]
+      $.error[Resource not found.]
     ]
   ]
+
+@onMessagePOST[aRequest]
+  ^try{
+    $lMessage[^core.messages.save[
+      $.data[$aRequest.message]
+      $.expiredAt[$aRequest.exp]
+      $.pinHash[$aRequest.pin]
+    ]]
+    $lExp[^date::create[$lMessage.expiredAt]]
+    $result[
+      $.status[201]
+      $.body[
+        $.token[$lMessage.token]
+        $.exp[^lExp.iso-string[]]
+      ]
+    ]
+  }{
+     ^if(^exception.type.match[^^core\.messages\.][n]){
+       $exception.handled(true)
+       $result[
+         $.status[400]
+         $.body[
+           $.error[$exception.source]
+         ]
+       ]
+     }
+  }
+
+@onMessageGET[aRequest]
+  $lMessage[^core.messages.load[$aRequest.token;$aRequest.pin]]
+  ^if(!$lMessage.error){
+    $result[
+      $.body[
+        $.token[$lMessage.token]
+        $.message[$lMessage.text]
+      ]
+    ]
+  }{
+     $result[
+       $.status[^if($lMessage.error.type eq "message.not.found"){404}{400}]
+       $.body[
+         $.error[$lMessage.error.source]
+       ]
+     ]
+   }
 
 @onPing[aRequest]
   $result[

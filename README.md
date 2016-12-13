@@ -22,18 +22,19 @@
 
 ### Save message
 
-`POST /v1/message`, body - `{"message":"some top secret info", "exp": 15, "pin": "12345"}`
-- `exp` expire in N minutes
-- `pin` fixed-size pin code
+`POST /v1/message`, body - `pin=12345&message=testtest-12345678&exp=15`
+- `message` сообщегие
+- `exp` время жизни сообщения в минутах
+- `pin` пин-код
 
 ```
-    $ http POST https://secrets.unhandled-exception.ru/api/v1/message pin=12345 message=testtest-12345678 exp=15
+    $ http --form POST https://secrets.unhandled-exception.ru/api/v1/message pin=12345 message=testtest-12345678 exp=15
 
     HTTP/1.1 201 Created
 
     {
-     "exp": "2016-06-25T13:33:45.11847278-05:00",
-     "token": "f1acfe04-277f-4016-518d-16c312ab84b5"
+        "exp": "2016-12-13T22:01:25+03:00",
+        "token": "109a943d-c254-4306-bdab-2afaac78e94f"
     }
 ```
 
@@ -42,13 +43,13 @@
 `GET /v1/message/:token/:pin`
 
 ```
-    $ http GET https://secrets.unhandled-exception.ru/api/v1/message/6ceab760-3059-4a52-5670-649509b128fc/12345
+    $ http GET https://secrets.unhandled-exception.ru/api/v1/message/109a943d-c254-4306-bdab-2afaac78e94f/12345
 
     HTTP/1.1 200 OK
 
     {
-     "token": "6ceab760-3059-4a52-5670-649509b128fc",
-     "message": "testtest-12345678"
+        "token": "109a943d-c254-4306-bdab-2afaac78e94f",
+        "message": "testtest-12345678"
     }
 ```
 

@@ -69,7 +69,7 @@ locals
 # Проверяем дилну пин-кода
   $result.pinHash[^result.pinHash.trim[]]
   ^if(^result.pinHash.length[] < $core.conf.minPinSize){
-    ^throw[core.messages.invalid.pin;Длина пин-код не должна быть меньше $core.conf.minPinSize символов]
+    ^throw[core.messages.invalid.pin;Длина пин-кода не должна быть меньше $core.conf.minPinSize символов]
   }
 
 # Обрабатываем TTL и выставляем дефолтное значение, если из формы пришла ерунда
@@ -97,7 +97,7 @@ locals
     $result.token[$lMessage.token]
   }
 
-@load[aToken;aPin] -> [$.text $.errors]
+@load[aToken;aPin] -> [$.token $.text $.errors]
 ## Достает сообщение из базы данных, расшифровывает, проверяет пин-код
   $result[]
   $lError[]
@@ -126,7 +126,10 @@ locals
       }
 
 #     Расшифровываем и удаляем сообщение из базы данных
-      $result[$.text[^self.decryptDataField[$lMessage.data;$aPin]]]
+      $result[
+        $.token[$lMessage.token]
+        $.text[^self.decryptDataField[$lMessage.data;$aPin]]
+      ]
       ^self.delete[$lMessage.messageID]
     }{
         ^if(^exception.type.match[^^message\.][n]){
