@@ -21,6 +21,9 @@
 ### [./app/controllers/site/manager.p](./app/controllers/site/manager.p)
 * SiteManager
 
+### [./app/controllers/site/middlewares.p](./app/controllers/site/middlewares.p)
+* CORSMiddleware
+
 ### [./app/models/core.p](./app/models/core.p)
 * Core
 * CoreSecurity
