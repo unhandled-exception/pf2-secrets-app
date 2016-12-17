@@ -19,6 +19,8 @@ body{
   .header-brand a:hover{color: #FD6E13;}
 
 h1{font-size: 2rem;}
+a:hover{color: #FD6E13;}
+a.link{text-decoration: underline;}
 
 .footer{
   margin-top: 1.5rem;

@@ -2,10 +2,38 @@
 #@import /_blocks/nav_blocks.pt
 
 @body[]
+  ^header[]
+
   <div class="container">
     <h1>$title</h1>
-    <p>Сообщение доступно по ссылке <a href="$messageLink">$messageLink</a> до ${messageExpiredAt}.</p>
-    <p><a href="^linkTo[/]" class="btn btn-secondary">Новое сообщение</a></p>
+    <div class="form-group row">
+      <div class="col-sm-8">
+        <textarea class="message-link-area form-control form-control-lg" rows="4" readonly="true">$messageLink
+        </textarea>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-sm-8">
+        <button class="btn btn-secondary message-link-copy-btn" data-toggle="tooltip" data-clipboard-target=".message-link-area">Скопировать ссылку</button>
+      </div>
+    </div>
+    <script>
+      ^$(function(){
+        var clipboard = new Clipboard('.message-link-copy-btn')^;
+        clipboard.on('success', function(e){
+          ^$('.message-link-copy-btn')
+            .text('Скопировали ссылку в клипборд')
+            .attr('disabled', '')
+        })
+      })^;
+    </script>
+
+    <div class="row">
+      <div class="col-sm-8">
+        <p>Не отправляйте ссылку и пин-код в двух письмах по электронной почте или двумя сообщениями в одном и том же чате.</p>
+      </div>
+    </div>
+    <p><a href="^linkTo[/]" class="link">Написать новое секретное сообщение</a></p>
   </div>
 
   ^footer[]

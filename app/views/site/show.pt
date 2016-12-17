@@ -2,6 +2,7 @@
 #@import /_blocks/nav_blocks.pt
 
 @body[]
+  ^header[]
   <div class="container">
     <h1>$title</h1>
     ^if($message && ^message.contains[text]){

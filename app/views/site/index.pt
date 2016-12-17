@@ -30,7 +30,7 @@
 ## aOptions.action[]
 ## aOptions.error
   ^cleanMethodArgument[aFormData;aOptions]
-  <form action="$aOptions.action" method="post" class="form-horizontal form-default">
+  <form action="$aOptions.action" method="post" class="form-default">
     <div class="form-group ^if($aOptions.error.type eq "core.messages.empty.data"){has-danger}">
 #       <label for="f-data">Текст</label>
       <textarea name="data" id="f-data" class="form-control" rows="6" placeholder="Тест сообщения" />$aFormData.data</textarea>

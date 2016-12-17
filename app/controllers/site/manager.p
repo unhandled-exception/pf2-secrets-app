@@ -29,11 +29,11 @@ locals
   ){
     ^try{
       $lMessage[^core.messages.save[$aRequest]]
-      ^render[save.pt;
+      $result[^render[save.pt;
         $.title[Сообщение зашифровали и сохранили]
         $.messageLink[^aRequest.absoluteURL[^linkFor[show;$lMessage]]]
         $.messageExpiredAt[$lMessage.expiredAt]
-      ]
+      ]]
     }{
        ^if(^exception.type.match[^^core\.messages\.][n]){
          $exception.handled(true)

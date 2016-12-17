@@ -1,3 +1,7 @@
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip();
+});
+
 $(function(){
   Validator = (function() {
     function Validator() {}
