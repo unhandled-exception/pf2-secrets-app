@@ -70,9 +70,3 @@ locals
      ^assignVar[messageForm;$aRequest.form]
   }
   ^render[show.pt]
-
-@onSave[aRequest]
-  $self.title[Зашифровать и сохранить сообщение]
-{
-     ^redirectTo[/]
-   }
