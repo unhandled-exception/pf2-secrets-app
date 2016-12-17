@@ -21,17 +21,17 @@
   ^use[pf2/lib/console/console_app.p]
   $app[^pfConsoleApp::create[]]
 
-  ^app.assignCommand[secrets;commands/secrets.p@SecretsCommand;
-    $.core[$core]
-    $.sql[$csql]
-  ]
-
   ^app.assignCommand[generate][
     pf2/lib/console/commands/generate.p@pfConsoleGenerateCommand
   ][
     $.sql[$csql]
     $.core[$core]
     $.formWidgets[bootstrap4]
+  ]
+
+  ^app.assignCommand[secrets;commands/secrets.p@SecretsCommand;
+    $.core[$core]
+    $.sql[$csql]
   ]
 
   ^app.assignCommand[sql][commands/sql.p@SQLCommand][

@@ -11,9 +11,6 @@ locals
 @BASE
 pfConsoleCommandWithSubcommands
 
-@auto[aFilespec]
-  $self.SQL_COMMAND_ROOT[^file:dirname[$aFilespec]]
-
 @create[aOptions]
 ## aOptions.sql — ссылка на класс соединение с БД.
   ^self.cleanMethodArgument[]

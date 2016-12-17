@@ -24,9 +24,8 @@ locals
 
 @onINDEX[aRequest]
   $self.title[Зашифровать и сохранить сообщение]
-  ^if($aRequest.isPOST
-    && ^self.antiFlood.validateRequest[$aRequest]
-  ){
+  ^if($aRequest.isPOST){
+    ^if(!^self.antiFlood.validateRequest[$aRequest]){^redirectTo[/]}
     ^try{
       $lMessage[^core.messages.save[$aRequest]]
       $result[^render[save.pt;
@@ -58,18 +57,17 @@ locals
   ]
 
 @onShow[aRequest]
-  $self.title[Прочитать сообщение]
+  $self.title[Прочитать секретное сообщение]
   ^if(!def $aRequest.token){^redirectTo[/]}
   ^if($aRequest.isPOST
     && ^self.antiFlood.validateRequest[$aRequest]
   ){
      $lMessage[^core.messages.load[$aRequest.token;$aRequest.pin]]
-     ^switch[$lMessage.error.type]{
-       ^case[DEFAULT]{
-         ^assignVar[message;$lMessage]
-         ^assignVar[messageForm;$aRequest.form]
-       }
+     ^if(!$lMessage.error){
+       $self.title[Секретное сообщение]
      }
+     ^assignVar[message;$lMessage]
+     ^assignVar[messageForm;$aRequest.form]
   }
   ^render[show.pt]
 

@@ -32,7 +32,6 @@
   ^cleanMethodArgument[aFormData;aOptions]
   <form action="$aOptions.action" method="post" class="form-default">
     <div class="form-group ^if($aOptions.error.type eq "core.messages.empty.data"){has-danger}">
-#       <label for="f-data">Текст</label>
       <textarea name="data" id="f-data" class="form-control" rows="6" placeholder="Тест сообщения" />$aFormData.data</textarea>
       ^if($aOptions.error.type eq "core.messages.empty.data"){
         <div class="form-control-feedback">$aOptions.error.message</div>
@@ -40,7 +39,7 @@
     </div>
 
     <div class="form-group ^if($aOptions.error.type eq "core.messages.invalid.pin"){has-danger}">
-      <label for="f-pinHash">Пин-код</label>
+      <label for="f-pinHash" class="form-control-label">Пин-код</label>
       <div class="row">
         <div class="col-sm-7">
           <div class="input-group">
@@ -54,7 +53,7 @@
     </div>
 
     <div class="form-group">
-      <label for="f-expiredAt">Время жизни сообщения</label>
+      <label for="f-expiredAt" class="form-control-label">Время жизни сообщения</label>
       <div class="row">
         <div class="col-sm-5">
           <div class="input-group">
