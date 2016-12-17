@@ -20,7 +20,7 @@
 
 Сайт предоставляет REST API для сохранения и загрузки сообщений.
 
-### Save message
+### Зашифровать и сохранить сообщение на сервере
 
 `POST /api/v1/message`, body - `pin=12345&message=testtest-12345678&exp=15`
 - `message` сообщегие
@@ -38,7 +38,7 @@
     }
 ```
 
-### Load message
+### Загрузить сообщение
 
 `GET /api/v1/message/:token/:pin`
 
@@ -53,7 +53,7 @@
     }
 ```
 
-### ping
+### Пинг
 
 `GET /api/v1/ping`
 
@@ -65,7 +65,7 @@
     pong
 ```
 
-### Get params
+### Получить настройки сервиса
 
 `GET /api/v1/params`
 
