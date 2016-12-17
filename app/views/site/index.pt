@@ -8,7 +8,7 @@
     <div class="row">
       <div class="col-md-8">
         ^save_form[$formData;
-          $.action[^linkTo[save]]
+          $.action[^linkTo[/]]
           $.error[$error]
         ]
       </div>

@@ -24,7 +24,31 @@ locals
 
 @onINDEX[aRequest]
   $self.title[Зашифровать и сохранить сообщение]
-  ^render[/index.pt]
+  ^if($aRequest.isPOST
+    && ^self.antiFlood.validateRequest[$aRequest]
+  ){
+    ^try{
+      $lMessage[^core.messages.save[$aRequest]]
+      ^render[save.pt;
+        $.title[Сообщение зашифровали и сохранили]
+        $.messageLink[^aRequest.absoluteURL[^linkFor[show;$lMessage]]]
+        $.messageExpiredAt[$lMessage.expiredAt]
+      ]
+    }{
+       ^if(^exception.type.match[^^core\.messages\.][n]){
+         $exception.handled(true)
+         $lError[
+           $.type[$exception.type]
+           $.message[$exception.source]
+         ]
+       }
+     }
+  }
+
+  ^render[/index.pt;
+    $.error[$lError]
+    $.formData[$aRequest.form]
+  ]
 
 @onNOTFOUND[aRequest]
   $self.title[Страница не найдена (404)]
@@ -51,31 +75,6 @@ locals
 
 @onSave[aRequest]
   $self.title[Зашифровать и сохранить сообщение]
-  ^if($aRequest.isPOST
-    && ^self.antiFlood.validateRequest[$aRequest]
-  ){
-    ^try{
-      $lMessage[^core.messages.save[$aRequest]]
-      ^render[save.pt;
-        $.title[Сообщение зашифровали и сохранили]
-        $.messageLink[^aRequest.absoluteURL[^linkFor[show;$lMessage]]]
-        $.messageExpiredAt[$lMessage.expiredAt]
-      ]
-    }{
-       ^if(^exception.type.match[^^core\.messages\.][n]){
-         $exception.handled(true)
-         $lError[
-           $.type[$exception.type]
-           $.message[$exception.source]
-         ]
-       }
-       ^if($lError){
-         ^render[/index.pt;
-           $.error[$lError]
-           $.formData[$aRequest.form]
-         ]
-       }
-     }
-  }{
+{
      ^redirectTo[/]
    }
