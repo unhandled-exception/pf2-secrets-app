@@ -18,7 +18,7 @@ pf2/lib/web/middleware.p
     $.antiFlood[
       $.storage[
 #        $.password[--сгенерировать--]
-        $.expires(60*60*8)
+        $.expires(60*60*24)
       ]
     ]
 

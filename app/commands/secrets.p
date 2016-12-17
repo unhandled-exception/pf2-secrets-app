@@ -21,16 +21,18 @@ pfConsoleCommandWithSubcommands
     $.help[Print messages statistics.]
   ]
 
-  ^self.assignSubcommand[cleanup;$cleanup;
+  ^self.assignSubcommand[cleanup [--all];$cleanup;
     $.help[Cleanup expired messages.]
   ]
 
 @stat[aArgs;aSwitches]
   $lStat[^core.messages.stat[]]
-  ^self.print[$lStat.total messages, $lStat.active active, $lStat.expired expired]
+  ^self.print[$lStat.total messages, ^lStat.active.int(0) active, ^lStat.expired.int(0) expired]
 
 @cleanup[aArgs;aSwitches]
-  $lDeleted[^core.messages.cleanup[]]
+  $lDeleted[^core.messages.cleanup[
+    $.all(^aSwitches.contains[all])
+  ]]
   $lNow[^date::now[]]
   ^self.print[[^lNow.sql-string[]] ^lDeleted.count[] expired messages was deleted.]
   ^lDeleted.foreach[_;v]{

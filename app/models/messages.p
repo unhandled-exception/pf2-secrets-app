@@ -26,25 +26,26 @@ locals
   ]
 
 @stat[] -> [$.total $.expired $.active]
-  $result[$.total(0) $.expired(0) $.active(0)]
   $result[^self.aggregate[
     count(*) as total;
     sum(case when $self.expiredAt <= '^self._now.sql-string[]' then 1 else 0 end) as expired;
     sum(case when $self.expiredAt > '^self._now.sql-string[]' then 1 else 0 end) as active;
     $.asTable(true)
   ]]
-  ^if($result){
-    $result[$result.fields]
-  }
+  $result[$result.fields]
 
-@cleanup[] -> [table: messageID, token, expiredAt]
+@cleanup[aOptions] -> [table: messageID, token, expiredAt]
 ## Удаляет из базы данных все «устаревшие» сообщения
+## aOptions.all(false) — удалить все сообщения
+  ^cleanMethodArgument[]
   $result[]
   ^CSQL.transaction{
     $result[^self.aggregate[
       _fields(messageID, token, expiredAt)
     ][
-      $.[expiredAt <=][$self._now]
+      ^if(!^aOptions.all.bool(false)){
+        $.[expiredAt <=][$self._now]
+      }
       $.tail[for update]
       $.groupBy[$.messageID[asc]]
       $.asTable(true)
