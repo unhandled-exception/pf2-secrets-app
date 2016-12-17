@@ -1,10 +1,15 @@
+@header[]
+  <div class="header container">
+    <div class="header-brand">^if($REQUEST.URI ne "/"){<a href="/">$ROOT.conf.siteName</a>}{$ROOT.conf.siteName}</div>
+  </div>
+
 @footer[aOptions]
   <div class="clearfix"></div>
   <footer class="footer">
     <div class="container">
       <div class="row">
         <div class="footer-copyrights col-sm-12">
-          <p>© 2016 Site Owner</p>
+          <p>© 2016^if($_now.year > 2016){…$_now.year} Олег Волчков. Исходный код на <a href="https://github.com/unhandled-exception/pf2-secrets-app">Гитхабе</a></p>
         </div>
       </div>
     </div>

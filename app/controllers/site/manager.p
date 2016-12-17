@@ -23,7 +23,7 @@ locals
   ^router.assign[show/:token;show]
 
 @onINDEX[aRequest]
-  $self.title[$core.conf.siteName]
+  $self.title[Зашифровать и сохранить сообщение]
   ^render[/index.pt]
 
 @onNOTFOUND[aRequest]
@@ -35,6 +35,7 @@ locals
 
 @onShow[aRequest]
   $self.title[Прочитать сообщение]
+  ^if(!def $aRequest.token){^redirectTo[/]}
   ^if($aRequest.isPOST
     && ^self.antiFlood.validateRequest[$aRequest]
   ){
@@ -49,6 +50,7 @@ locals
   ^render[show.pt]
 
 @onSave[aRequest]
+  $self.title[Зашифровать и сохранить сообщение]
   ^if($aRequest.isPOST
     && ^self.antiFlood.validateRequest[$aRequest]
   ){

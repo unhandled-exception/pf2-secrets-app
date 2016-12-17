@@ -1,0 +1,39 @@
+body{
+  background-color: #efefef;
+  padding: 0 1.5rem 0 1rem;
+}
+
+.container{
+  margin-left: 0;
+}
+
+.header{
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+  .header-brand{
+    font-size: 1rem;
+    font-weight: bold;
+  }
+  .header-brand a {color: black; text-decoration: underline;}
+  .header-brand a:hover{color: #FD6E13;}
+
+h1{font-size: 2rem;}
+
+.footer{
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  color: #666;
+}
+  .footer a{color: #666; text-decoration: underline;}
+  .footer a:hover{color: #FD6E13;}
+
+  .footer-copyrights{}
+
+.secret-form-description{
+  font-size: 0.9rem;
+}
+
+.about{
+  margin-top: 1rem;
+}

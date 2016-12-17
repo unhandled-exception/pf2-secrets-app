@@ -28,6 +28,19 @@ PF2:
     ☐ Убрать в antiflood sql-команды с данными из лога
     ☐ В генератор форм учитывать поле formField из поля модели
     ☐ Парсинг строки подключения перенести в pfConnection и сделать поля host, user и т.д.
+    ☐ Процессор static в роутере. Полезно, если статику хотим закрыть авторизацией
+      router.Static("/assets", "./assets")
+      router.StaticFS("/more_static", http.Dir("my_file_system"))
+      router.StaticFile("/favicon.ico", "./resources/favicon.ico")
+    ☐ Сделать обработку X-Real-IP и X-Forwarded-For в pfRequest.
+      https://github.com/gin-gonic/gin/blob/master/context.go#L341
+
+  Auth:
+    ☐ В psSQLSecurity есть метод digest описан как hmac-digest, но хеширует без hmac. Перенести метод digest из CoreSecurity, добавить параметры secretKey и disableHMAC.
+    ☐ В auth.p@pfUserRolesAuth добавить время жизни куки в токен и проверять при авторизации
+    ☐ Сделать дефолтную генерацию secureToken в модели pfUserModel. Посолить токен текущим временем.
+    ☐ Команда manage.p auth [create-user|modify-user]
+
 
 
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿

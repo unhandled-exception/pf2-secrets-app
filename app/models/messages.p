@@ -69,7 +69,7 @@ locals
 # Проверяем дилну пин-кода
   $result.pinHash[^result.pinHash.trim[]]
   ^if(^result.pinHash.length[] < $core.conf.minPinSize){
-    ^throw[core.messages.invalid.pin;Длина пин-кода не должна быть меньше $core.conf.minPinSize символов]
+    ^throw[core.messages.invalid.pin;Длина пин-кода должна быть не менее $core.conf.minPinSize символов]
   }
 
 # Обрабатываем TTL и выставляем дефолтное значение, если из формы пришла ерунда
