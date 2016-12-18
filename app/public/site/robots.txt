@@ -2,4 +2,4 @@ User-agent: *
 Host: secrets.unhandled-exception.ru
 Disallow: /api
 Disallow: /show
-
+Disallow: /saved

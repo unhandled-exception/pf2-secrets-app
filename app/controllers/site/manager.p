@@ -22,17 +22,31 @@ locals
   ^router.assignModule[api/v1;controllers/site/api.p@APIController]
   ^router.assign[show/:token;show]
 
+  ^router.assignMiddleware[pf2/lib/web/middleware.p@pfSessionMiddleware;
+    $.cryptoProvider[$core.security]
+    $.expires[session]
+  ]
+
+@onNOTFOUND[aRequest]
+  $self.title[Страница не найдена (404)]
+  $result[
+    $.status[404]
+    $.body[^render[/404.pt]]
+  ]
+
 @onINDEX[aRequest]
   $self.title[Зашифровать и сохранить сообщение]
   ^if($aRequest.isPOST){
     ^if(!^self.antiFlood.validateRequest[$aRequest]){^redirectTo[/]}
     ^try{
       $lMessage[^core.messages.save[$aRequest]]
-      $result[^render[save.pt;
-        $.title[Сообщение зашифровали и сохранили]
-        $.messageLink[^aRequest.absoluteURL[^linkFor[show;$lMessage]]]
-        $.messageExpiredAt[$lMessage.expiredAt]
-      ]]
+
+#     Записываем токен в сессию и делаем редирект на страницу /saved
+      $aRequest.session.message[
+        $.token[$lMessage.token]
+        $.expiredAt[$lMessage.expiredAt]
+      ]
+      ^redirectTo[saved]
     }{
        ^if(^exception.type.match[^^core\.messages\.][n]){
          $exception.handled(true)
@@ -49,12 +63,16 @@ locals
     $.formData[$aRequest.form]
   ]
 
-@onNOTFOUND[aRequest]
-  $self.title[Страница не найдена (404)]
-  $result[
-    $.status[404]
-    $.body[^render[/404.pt]]
-  ]
+@onSaved[aRequest]
+  $lMessage[$aRequest.session.message]
+  ^if(!def $lMessage.token){^redirectTo[/]}
+  ^aRequest.session.delete[message]
+
+  $result[^render[saved.pt;
+    $.title[Сообщение зашифровали и сохранили]
+    $.messageLink[^aRequest.absoluteURL[^linkFor[show;$lMessage]]]
+    $.messageExpiredAt[$lMessage.expiredAt]
+  ]]
 
 @onShow[aRequest]
   $self.title[Прочитать секретное сообщение]
