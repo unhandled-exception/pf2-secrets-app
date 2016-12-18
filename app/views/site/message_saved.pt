@@ -19,11 +19,12 @@
     </div>
     <script>
       ^$(function(){
-        var clipboard = new Clipboard('.message-link-copy-btn')^;
+        var btn = '.message-link-copy-btn'^;
+        var clipboard = new Clipboard(btn)^;
         clipboard.on('success', function(e){
-          ^$('.message-link-copy-btn')
+          ^$(btn)
             .text('Скопировали ссылку в клипборд')
-            .attr('disabled', '')
+            .attr('disabled', '')^;
         })
       })^;
     </script>
