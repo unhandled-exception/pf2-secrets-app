@@ -30,7 +30,7 @@
 ## aOptions.action[]
 ## aOptions.error
   ^cleanMethodArgument[aFormData;aOptions]
-  <form action="$aOptions.action" method="post" class="form-default">
+  <form action="$aOptions.action" method="post" class="message-form form-default">
     <div class="form-group ^if($aOptions.error.type eq "core.messages.empty.data"){has-danger}">
       <textarea name="data" id="f-data" class="form-control" rows="6" placeholder="Тест сообщения" />$aFormData.data</textarea>
       ^if($aOptions.error.type eq "core.messages.empty.data"){
@@ -72,5 +72,8 @@
   <script>
     ^$(function(){
       validator.check_form(['#f-data', '#f-pinHash'], ['#f-sub'])
+      ^$('.message-form').on('submit', function(e){
+        ^$('#f-sub').attr('disabled', '')^;
+      })^;
     });
   </script>
