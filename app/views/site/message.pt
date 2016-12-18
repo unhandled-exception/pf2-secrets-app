@@ -69,6 +69,7 @@
 
   <script>
     ^$(function(){
+      ^$('#f-pin').focus()^;
       validator.check_form(['#f-pin'], ['#f-sub'])
     });
   </script>

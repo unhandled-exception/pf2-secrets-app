@@ -167,11 +167,14 @@ locals
     ^case[DEFAULT]{$result[^BASE:fieldValue[$aField;$aValue]]}
   }
 
-@_makePinHash[aText;aSalt]
+@_makePinHash[aPin;aSalt]
+## Хешируем пароль через crypt. Если система умеет, то используем Blowfish
+## К пину добавляем «локальный параметр», который не храним в БД.
+## https://habrahabr.ru/post/210760/
   ^unsafe{
 #   Пробуем хешировать через системный bcrypt (Blowfish). Есть во FreeBSD
-    $result[^math:crypt[$aText;^self.ifdef[$aSalt]{^$2b^$08^$^math:uid64[]^math:uid64[]}]]
+    $result[^math:crypt[${aPin}${core.security.secretKey};^self.ifdef[$aSalt]{^$2b^$08^$^math:uid64[]^math:uid64[]}]]
   }{
 #    Если bcrypt нет, то хешируем стандартным способом
-     $result[^math:crypt[$aText;^self.ifdef[$aSalt]{^$apr1^$}]]
+     $result[^math:crypt[${aPin}${core.security.secretKey};^self.ifdef[$aSalt]{^$apr1^$}]]
    }

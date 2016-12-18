@@ -71,6 +71,9 @@
 
   <script>
     ^$(function(){
+      ^if(!$aOptions.error){
+        ^$('#f-data').focus()^;
+      }
       validator.check_form(['#f-data', '#f-pinHash'], ['#f-sub'])
       ^$('.message-form').on('submit', function(e){
         ^$('#f-sub').attr('disabled', '')^;
