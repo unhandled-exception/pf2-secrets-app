@@ -20,7 +20,11 @@ locals
   $self.conf[$aOptions.conf]
 
   ^router.assignModule[api/v1;controllers/site/api.p@APIController]
-  ^router.assign[show/:token;show]
+  ^router.assign[message/:token;message;
+    $.where[
+      $.token[[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}]
+    ]
+  ]
 
   ^router.assignMiddleware[pf2/lib/web/middleware.p@pfSessionMiddleware;
     $.cryptoProvider[$core.security]
@@ -45,7 +49,7 @@ locals
         $.token[$lMessage.token]
         $.expiredAt[$lMessage.expiredAt]
       ]
-      ^redirectTo[saved]
+      ^redirectTo[message/saved]
     }{
        ^if(^exception.type.match[^^core\.messages\.][n]){
          $exception.handled(true)
@@ -62,18 +66,18 @@ locals
     $.formData[$aRequest.form]
   ]
 
-@onSaved[aRequest]
+@onMessageSaved[aRequest]
   $lMessage[$aRequest.session.message]
   ^if(!def $lMessage.token){^redirectTo[/]}
   ^aRequest.session.delete[message]
 
-  $result[^render[saved.pt;
+  $result[^render[message_saved.pt;
     $.title[Сообщение зашифровали и сохранили]
-    $.messageLink[^aRequest.absoluteURL[^linkFor[show;$lMessage]]]
+    $.messageLink[^aRequest.absoluteURL[^linkFor[message;$lMessage]]]
     $.messageExpiredAt[$lMessage.expiredAt]
   ]]
 
-@onShow[aRequest]
+@onMessage[aRequest]
   $self.title[Прочитать секретное сообщение]
   ^if(!def $aRequest.token){^redirectTo[/]}
   ^if($aRequest.isPOST
@@ -86,4 +90,4 @@ locals
      ^assignVar[message;$lMessage]
      ^assignVar[messageForm;$aRequest.form]
   }
-  ^render[show.pt]
+  ^render[message.pt]
