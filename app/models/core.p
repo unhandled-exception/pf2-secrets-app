@@ -45,7 +45,8 @@ pfSQLSecurityCrypt
 ## Возвращает криптографический хеш строки
 ## aOptions.format[_serializer]
 ## aOptions.algorythm[_hashAlgorythm]
+## aOptions.hmac[_secretKey]
   $result[^math:digest[^self.ifdef[$aOptions.algorythm]{$self._hashAlgorythm};$aString;
     $.format[^self.ifdef[$aOptions.format]{$self._serializer}]
-    $.hmac[$self._secretKey]
+    $.hmac[^self.ifdef[$aOptions.hmac]{$self._secretKey}]
   ]]

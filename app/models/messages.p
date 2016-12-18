@@ -112,7 +112,7 @@ locals
       ]]
       ^if(!$lMessage){^throw[message.not.found;Сообщение не найдено]}
 
-      ^if($lMessage.pinHash ne ^_makePinHash[$aPin]){
+      ^if($lMessage.pinHash ne ^_makePinHash[$aPin;$lMessage.pinHash]){
 #       Неверный пин-код
         $lMessage.errors($lMessage.errors + 1)
         ^if($lMessage.errors < $core.conf.maxPinAttempts){
@@ -167,5 +167,11 @@ locals
     ^case[DEFAULT]{$result[^BASE:fieldValue[$aField;$aValue]]}
   }
 
-@_makePinHash[aPin]
-  $result[^core.security.digest[$aPin]]
+@_makePinHash[aText;aSalt]
+  ^unsafe{
+#   Пробуем хешировать через системный bcrypt (Blowfish). Есть во FreeBSD
+    $result[^math:crypt[$aText;^self.ifdef[$aSalt]{^$2b^$08^$^math:uid64[]^math:uid64[]}]]
+  }{
+#    Если bcrypt нет, то хешируем стандартным способом
+     $result[^math:crypt[$aText;^self.ifdef[$aSalt]{^$apr1^$}]]
+   }
