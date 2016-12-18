@@ -64,7 +64,6 @@
       </div>
     </div>
 
-    ^antiFlood.field[]
     <div class="form-group">
       <input type="submit" id="f-sub" value="Сохранить" class="btn btn-primary" />
     </div>

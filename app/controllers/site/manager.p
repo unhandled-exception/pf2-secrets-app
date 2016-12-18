@@ -37,7 +37,6 @@ locals
 @onINDEX[aRequest]
   $self.title[Зашифровать и сохранить сообщение]
   ^if($aRequest.isPOST){
-    ^if(!^self.antiFlood.validateRequest[$aRequest]){^redirectTo[/]}
     ^try{
       $lMessage[^core.messages.save[$aRequest]]
 
