@@ -149,13 +149,13 @@ locals
 @encryptDataField[aData;aPin] -> [string]
 ## Шифрует текст сообщения с использованием pin-кода
   $result[^core.security.encrypt[$aData][
-    $.cryptKey[^core.security.digest[${core.security.cryptKey}$aPin]]
+    $.cryptKey[^core.security.digest[${aPin}${core.security.cryptKey}]]
   ]]
 
 @decryptDataField[aData;aPin] -> [string]
 ## Расшифровывает текст сообщения с использованием pin-кода
   $result[^core.security.decrypt[$aData][
-    $.cryptKey[^core.security.digest[${core.security.cryptKey}$aPin]]
+    $.cryptKey[^core.security.digest[${aPin}${core.security.cryptKey}]]
   ]]
 
 @fieldValue[aField;aValue]
