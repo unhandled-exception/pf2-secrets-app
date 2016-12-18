@@ -6,12 +6,28 @@
   <div class="container">
     <h1>$title</h1>
     ^if($message && ^message.contains[text]){
-      <div class="row">
+      <div class="form-group row">
         <div class="col-sm-8">
-          <textarea rows="10" class="form-control form-control-lg" readonly="true">$message.text</textarea>
+          <textarea rows="10" class="message-text-area form-control form-control-lg" readonly="true">^taint[html][$message.text]</textarea>
           <p class="mt-2">Сообщение пропадет как только вы закроете эту страницу.</p>
         </div>
       </div>
+
+      <div class="form-group row">
+        <div class="col-sm-8">
+          <button class="btn btn-secondary message-text-copy-btn" data-toggle="tooltip" data-clipboard-target=".message-text-area">Скопировать сообщение</button>
+        </div>
+      </div>
+      <script>
+        ^$(function(){
+          var clipboard = new Clipboard('.message-text-copy-btn')^;
+          clipboard.on('success', function(e){
+            ^$('.message-text-copy-btn')
+              .text('Скопировали сообщение в клипборд')
+              .attr('disabled', '')
+          })
+        })^;
+      </script>
     }{
        ^switch[$message.error.type]{
          ^case[message.not.found]{
