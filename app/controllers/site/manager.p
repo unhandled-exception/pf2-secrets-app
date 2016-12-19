@@ -25,7 +25,10 @@ locals
       $.token[[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}]
     ]
   ]
-  ^router.assign[api;$.render[/api.pt]]
+  ^router.assign[api;$.render[
+    $.template[/api.pt]
+    $.context[$.title[АПИ]]
+  ]]
 
   ^router.assignMiddleware[pf2/lib/web/middleware.p@pfSessionMiddleware;
     $.cryptoProvider[$core.security]
