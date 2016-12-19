@@ -125,7 +125,7 @@ $response:content-type[
   ^unhandled_exception_debug[$exception;$stack]
 }{
    ^switch[$exception.type]{
-     ^case[DEFAULT]{$response:location[/500.htm]}
+     ^case[DEFAULT]{$response:location[/500.htm?^math:uid64[]]}
    }
    ^sendExceptionToAdmin[$exception;$stack]
  }

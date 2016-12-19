@@ -8,10 +8,14 @@ MaintenanceManager
 SiteInterfaceModule
 
 @create[aOptions]
-  ^BASE:create[$aOptions]
+## aOptions.conf
+  ^BASE:create[
+    ^hash::create[$aOptions]
+    $.asManager(true)
+  ]
+  $self.conf[$aOptions.conf]
 
 @onINDEX[aRequest]
-  $self.title[$core.conf.siteName]
   $result[
     $.status[503]
     $.headers[

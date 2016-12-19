@@ -1,3 +1,5 @@
+# https://github.com/aziz/PlainTasks
+
 PF2 Secretes:
   Tasks:
     ✔ Вынести модель core.messages в отдельный файл @done (16-12-09 09:59)
@@ -11,6 +13,7 @@ PF2 Secretes:
     ✔ Копирование сообщения в буфер обмена через clipboardjs @done (16-12-17 20:23)
     ✔ Дизайн сайта @done (16-12-17 20:51)
     ✔ Описание сайта на главной странице @done (16-12-17 20:51)
+    ✔ Доверстать страницы с ошибками и для режима обслуживания @done (16-12-19 09:12)
 
   API:
     ✔ Написать спецификацию API в README.md @done (16-12-13 11:58)
@@ -36,7 +39,8 @@ PF2:
       https://github.com/gin-gonic/gin/blob/master/context.go#L341
 
   Auth:
-    ☐ В psSQLSecurity есть метод digest описан как hmac-digest, но хеширует без hmac. Перенести метод digest из CoreSecurity, добавить параметры secretKey и disableHMAC.
+    ☐ Перенести метод digest из CoreSecurity, добавить параметры secretKey и disableHMAC.
+      В psSQLSecurity есть метод digest описан как hmac-digest, но хеширует без hmac.
     ☐ В auth.p@pfUserRolesAuth добавить время жизни куки в токен и проверять при авторизации
     ☐ Сделать дефолтную генерацию secureToken в модели pfUserModel. Посолить токен текущим временем.
     ☐ Команда manage.p auth [create-user|modify-user]

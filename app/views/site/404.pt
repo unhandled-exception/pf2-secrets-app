@@ -2,8 +2,14 @@
 #@import /_blocks/nav_blocks.pt
 
 @body[]
+  ^header[]
   <div class="container">
-    <h1>$title</h1>
-    <p>Неправильно набран адрес, или такой страницы на сайте больше не существует. </p>
+    <div class="row">
+      <div class="col-sm-8">
+        <h1>$title</h1>
+        <p>Неправильно набран адрес, или такой страницы на сайте больше не существует. </p>
+        <p><a href="^linkTo[/]" class="link">Перейти на главную</a></p>
+      </div>
+    </div>
   </div>
   ^footer[]

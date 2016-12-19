@@ -32,6 +32,7 @@ pf2/lib/web/middleware.p
 #    $CONF.cryptKey[...]
 #    $CONF.antiFlood.storage.password[...]
 #    $CONF.connectString[mysql://secrets_ue:...@localhost/secrets_ue]
+#  #  $CONF.features.maintenanceMode(true)
 
     $.security[
       $.xframeOptions(true)
