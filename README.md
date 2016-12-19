@@ -77,7 +77,7 @@
     HTTP/1.1 200 OK
 
     {
-        "max_exp_min": 15,
+        "min_exp_min": 10,
         "max_pin_attempts": 3,
         "min_pin_size": 5
     }

@@ -94,7 +94,7 @@ locals
 @onParams[aRequest]
   $result[
     $.body[
-      $.max_exp_min($core.conf.defaultMessageTTL)
+      $.min_exp_min($core.conf.defaultMessageTTL)
       $.max_pin_attempts($core.conf.maxPinAttempts)
       $.min_pin_size($core.conf.minPinSize)
     ]

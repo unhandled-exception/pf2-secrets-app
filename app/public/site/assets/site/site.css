@@ -19,6 +19,8 @@ body{
   .header-brand a:hover{color: #FD6E13;}
 
 h1{font-size: 2rem;}
+h2{font-size: 1.8rem;}
+h3{font-size: 1.6rem;}
 a:hover{color: #FD6E13;}
 a.link{text-decoration: underline;}
 
@@ -39,3 +41,6 @@ a.link{text-decoration: underline;}
 .about{
   margin-top: 1rem;
 }
+
+.article{}
+  .article>pre>code{font-size: 0.8rem;}
