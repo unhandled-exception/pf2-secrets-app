@@ -43,4 +43,4 @@ a.link{text-decoration: underline;}
 }
 
 .article{}
-  .article>pre>code{font-size: 0.8rem;}
+  .article>pre{font-size: 0.8rem; background-color: #333; color: #eee; margin-bottom: 2rem;}
