@@ -19,7 +19,7 @@
     </div>
     <div class="row about">
       <div class="col-md-8">
-        <p>Сайт помогает пользователям передавать секретные сообщения коллегам и друзьям через интернет. Сообщение защищаем пин-кодом и уничтожаем как только получатель откроет ссылку и введет правильный пин-код.</p>
+        <p>Сайт помогает пользователям передавать секретные сообщения коллегам и друзьям через интернет. Сообщение защищаем пин-кодом и уничтожаем как только получатель откроет ссылку и введет правильный пин-код. Сообщение шифруем на сервере так, что даже админы его не прочитают.</p>
       </div>
     </div>
   </div>
@@ -32,7 +32,7 @@
   ^cleanMethodArgument[aFormData;aOptions]
   <form action="$aOptions.action" method="post" class="message-form form-default">
     <div class="form-group ^if($aOptions.error.type eq "core.messages.empty.data"){has-danger}">
-      <textarea name="data" id="f-data" class="form-control" rows="6" placeholder="Тест сообщения" />$aFormData.data</textarea>
+      <textarea name="data" id="f-data" class="form-control" rows="6" placeholder="Текст сообщения" />$aFormData.data</textarea>
       ^if($aOptions.error.type eq "core.messages.empty.data"){
         <div class="form-control-feedback">$aOptions.error.message</div>
       }
