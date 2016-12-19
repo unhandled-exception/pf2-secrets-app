@@ -17,9 +17,9 @@
   <h3>Зашифровать и сохранить сообщение на сервере</h3>
   <p><code>POST /api/v1/message</code>, body - <code>pin=12345&amp;message=testtest-12345678&amp;exp=15</code></p>
   <ul>
-    <li><code>message</code> сообщегие</li>
-    <li><code>exp</code> время жизни сообщения в минутах</li>
-    <li><code>pin</code> пин-код</li>
+    <li><code>message</code> — сообщение</li>
+    <li><code>exp</code> — время жизни сообщения в минутах</li>
+    <li><code>pin</code> — пин-код</li>
   </ul>
 
   <pre><code>

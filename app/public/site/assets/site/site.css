@@ -43,4 +43,5 @@ a.link{text-decoration: underline;}
 }
 
 .article{}
-  .article>pre{font-size: 0.8rem; background-color: #333; color: #eee; margin-bottom: 2rem;}
+  .article code{background-color: transparent; padding: 0;}
+  .article pre{font-size: 0.8rem; background-color: #333; color: #eee; margin-bottom: 2rem;}
