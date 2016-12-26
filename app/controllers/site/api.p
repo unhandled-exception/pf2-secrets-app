@@ -19,7 +19,7 @@ locals
   ^router.assign[message/:token/:pin;message]
 
 # Подключаем CORS-мидлваре к API-модулю
-  ^router.assignMiddleware[controllers/site/middlewares.p@CORSMiddleware;
+  ^router.assignMiddleware[controllers/site/middleware.p@CORSMiddleware;
     $.applicationName[pf2-secrets]
   ]
 
