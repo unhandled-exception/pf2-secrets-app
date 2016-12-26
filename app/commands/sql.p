@@ -42,9 +42,7 @@ pfConsoleCommandWithSubcommands
     $.help[Show connection settings.]
   ]
 
-
 @schema[aAgrs;aSwitches]
-  ^self.print[$self.SQL_COMMAND_ROOT]
   $lExec[^file::exec[$self.mysqldumpBin;;-dR;--skip-comments;--user=$self.sqlServer.user;--password=$self.sqlServer.password;$self.sqlServer.schema]]
   ^self.print[^lExec.text.match[\sauto_increment=\d+][ig][]]
 
