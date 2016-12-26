@@ -3,6 +3,8 @@ pf2/lib/sql/models/structs.p
 pf2/lib/security/sql_security.p
 
 
+## Модель данных сайта
+
 @CLASS
 Core
 

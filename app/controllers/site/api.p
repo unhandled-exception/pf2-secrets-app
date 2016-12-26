@@ -2,6 +2,9 @@
 controllers/site/interface.p
 
 
+## Контролер для api сайта
+## Монтируем в /api/v1
+
 @CLASS
 APIController
 
@@ -24,6 +27,9 @@ locals
   ]
 
 @postJSON[aResponse]
+## Постобработчик для ответов типа json
+## Если нам пришел хеш, то преобразовываем его в json-строку
+## Добавляем заголовок Content-Type: application/json
   $result[$aResponse]
   $result.contentType[application/json]
   ^if(!def $result.body){
@@ -33,6 +39,7 @@ locals
   }
 
 @onNOTFOUND[aRequest]
+## Выдаем свою сраниыку для 404-ошибке в формате JSON
   $result[
     $.status[404]
     $.body[
@@ -41,6 +48,11 @@ locals
   ]
 
 @onMessagePOST[aRequest]
+## Зашифровать и сохранить сообщение на сервере
+## POST /api/v1/message, body - `pin=12345&message=testtest-12345678&exp=15
+## message — сообщение
+## exp — время жизни сообщения в минутах
+## pin — пин-код
   ^try{
     $lMessage[^core.messages.save[
       $.data[$aRequest.message]
@@ -68,6 +80,8 @@ locals
   }
 
 @onMessageGET[aRequest]
+## Загрузить сообщение
+## GET /api/v1/message/:token/:pin
   $lMessage[^core.messages.load[$aRequest.token;$aRequest.pin]]
   ^if(!$lMessage.error){
     $result[
@@ -86,12 +100,16 @@ locals
    }
 
 @onPing[aRequest]
+## Пинг
+## GET /api/v1/ping
   $result[
     $.contentType[text/plain]
     $.body[pong]
   ]
 
 @onParams[aRequest]
+## Получить настройки сервиса
+## GET /api/v1/params
   $result[
     $.body[
       $.min_exp_min($core.conf.defaultMessageTTL)

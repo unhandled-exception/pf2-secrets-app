@@ -1,6 +1,10 @@
 @USE
 controllers/site/interface.p
 
+
+## Контролер для режима обслуживания
+## Выдает на все запросы 503-ошибку
+
 @CLASS
 MaintenanceManager
 

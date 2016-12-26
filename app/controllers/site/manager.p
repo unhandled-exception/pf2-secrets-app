@@ -2,6 +2,8 @@
 controllers/site/interface.p
 
 
+## Главный контролер сайта
+
 @CLASS
 SiteManager
 
@@ -12,30 +14,36 @@ SiteInterfaceModule
 locals
 
 @create[aOptions]
-## aOptions.conf
+## aOptions.conf — хеш с конфигурацией сайта
   ^BASE:create[
     ^hash::create[$aOptions]
     $.asManager(true)
   ]
   $self.conf[$aOptions.conf]
 
-  ^router.assignModule[api/v1;controllers/site/api.p@APIController]
   ^router.assign[message/:token;message;
     $.where[
       $.token[[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}]
     ]
   ]
+
+# Подключаем модуль и страницу с описанием API сайта
+  ^router.assignModule[api/v1;controllers/site/api.p@APIController]
   ^router.assign[api;$.render[
     $.template[/api.pt]
     $.context[$.title[АПИ]]
   ]]
 
+# Подключаем мидлваре для хранения зашифрованной сессий на клиенте
+# В сессию запишем токен зашифрованного сообщения, чтобы потом безопасно показать на странице /message/saved.
   ^router.assignMiddleware[pf2/lib/web/middleware.p@pfSessionMiddleware;
     $.cryptoProvider[$core.security]
     $.expires[session]
   ]
 
 @onNOTFOUND[aRequest]
+## Обработчик всех 404-страниц
+## Вызываем, если не найден обработчик для марщрута или в обработчике вызвали ^abort(404)
   $self.title[Страница не найдена (404)]
   $result[
     $.status[404]
@@ -43,12 +51,14 @@ locals
   ]
 
 @onINDEX[aRequest]
+## Главная страница сайта
   $self.title[Зашифровать и сохранить сообщение]
   ^if($aRequest.isPOST){
+#   Обрабатываем форму с секретныйм сообщением
     ^try{
       $lMessage[^core.messages.save[$aRequest]]
 
-#     Записываем токен в сессию и делаем редирект на страницу /saved
+#     Записываем токен в сессию и делаем редирект на страницу /message/saved
       $aRequest.session.message[
         $.token[$lMessage.token]
         $.expiredAt[$lMessage.expiredAt]
@@ -71,6 +81,7 @@ locals
   ]
 
 @onMessageSaved[aRequest]
+## Показываем ссылку на сохраненное сообщение
   $lMessage[$aRequest.session.message]
   ^if(!def $lMessage.token){^redirectTo[/]}
   ^aRequest.session.delete[message]
@@ -82,6 +93,7 @@ locals
   ]]
 
 @onMessage[aRequest]
+## Показываем сообщение по ссылке
   $self.title[Прочитать секретное сообщение]
   ^if(!def $aRequest.token){^redirectTo[/]}
   ^if($aRequest.isPOST

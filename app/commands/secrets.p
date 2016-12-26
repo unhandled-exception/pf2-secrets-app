@@ -5,6 +5,8 @@ pf2/lib/sql/models/structs.p
 @CLASS
 SecretsCommand
 
+## Команда manage.p secrets
+
 @OPTIONS
 locals
 

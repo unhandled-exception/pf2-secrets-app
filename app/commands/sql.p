@@ -5,6 +5,8 @@ pf2/lib/sql/models/structs.p
 @CLASS
 SQLCommand
 
+## Команда manage.p sql
+
 @OPTIONS
 locals
 

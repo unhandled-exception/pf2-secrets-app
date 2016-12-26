@@ -1,6 +1,8 @@
 @CLASS
 CoreMessages
 
+## Сообщения
+
 @BASE
 pfModelTable
 
@@ -14,6 +16,7 @@ locals
 #    $.allAsTable(true)
   ]
 
+# Список полей в таблице messages в БД
   ^self.addFields[
     $.messageID[$.plural[messages] $.dbField[message_id] $.primary(true) $.widget[none]]
     $.token[$.label[] $.processor[uid] $.widget[none]]
@@ -26,6 +29,7 @@ locals
   ]
 
 @stat[] -> [$.total $.expired $.active]
+## Возвращает статистику сообщений
   $result[^self.aggregate[
     count(*) as total;
     sum(case when $self.expiredAt <= '^self._now.sql-string[]' then 1 else 0 end) as expired;
@@ -83,7 +87,7 @@ locals
   $result.expiredAt[^date::create($_now + $result.expiredAt/(24*60))]
 
 @save[aData] -> [$.messageID $.token $.expiredAt]
-## Созраняет сообщение в базе данных
+## Сохраняет сообщение в базе данных
   $result[^hash::create[]]
   $aData[^self.cleanFormData[$aData]]
   ^CSQL.transaction{
@@ -159,6 +163,7 @@ locals
   ]]
 
 @fieldValue[aField;aValue]
+## Добавляет обработку процессора _pin для поля pinHash
   $result[]
   ^switch[$aField.processor]{
     ^case[_pin]{
