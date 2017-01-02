@@ -9,7 +9,7 @@
     <div class="container">
       <div class="row">
         <div class="footer-copyrights col-sm-12">
-          <p>© 2016^if($_now.year > 2016){…$_now.year} <a href="https://unhandled-exception.ru/">Олег Волчков</a>. Исходный код сайта лежит на <a href="https://github.com/unhandled-exception/pf2-secrets-app">Гитхабе</a></p>
+          <p>© 2016^if($_now.year > 2016){…$_now.year} <a href="https://unhandled-exception.ru/">Олег Волчков</a>. Исходный код сайта <a href="https://github.com/unhandled-exception/pf2-secrets-app">на Гитхабе</a></p>
         </div>
       </div>
     </div>
