@@ -1,6 +1,7 @@
 #!/usr/bin/env parser3
 
-@auto[]
+@auto[filespec]
+  $request:document-root[^file:dirname[$filespec]]
   $CLASS_PATH[^table::create{path}]
   ^CLASS_PATH.append{./}
   ^CLASS_PATH.append{/../vendor/}
