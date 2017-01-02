@@ -6,7 +6,7 @@
   <div class="container">
     <h1>$title</h1>
     <div class="row">
-      <div class="col-md-8">
+      <div class="col-md-12">
         ^save_form[$formData;
           $.action[^linkTo[/]]
           $.error[$error]
@@ -15,6 +15,7 @@
     </div>
     <div class="row about">
       <div class="col-md-4 hidden-xs-down">
+        <h5>О проекте</h5>
         <p>Сайт помогает пользователям передавать секретные сообщения коллегам и друзьям через интернет. Сообщение защищаем пин-кодом и уничтожаем как только получатель откроет ссылку и введет правильный пин-код. Сообщение шифруем на сервере так, что даже админы его не прочитают.</p>
       </div>
       <div class="col-md-8">
@@ -34,7 +35,7 @@
   ^cleanMethodArgument[aFormData;aOptions]
   <form action="$aOptions.action" method="post" class="message-form form-default">
     <div class="form-group ^if($aOptions.error.type eq "core.messages.empty.data"){has-danger}">
-      <textarea name="data" id="f-data" class="form-control" rows="6" placeholder="Текст сообщения" />$aFormData.data</textarea>
+      <textarea name="data" id="f-data" class="form-control" rows="7" placeholder="Текст сообщения" />$aFormData.data</textarea>
       ^if($aOptions.error.type eq "core.messages.empty.data"){
         <div class="form-control-feedback">$aOptions.error.message</div>
       }
@@ -43,7 +44,7 @@
     <div class="form-group ^if($aOptions.error.type eq "core.messages.invalid.pin"){has-danger}">
       <label for="f-pinHash" class="form-control-label">Пин-код</label>
       <div class="row">
-        <div class="col-sm-7">
+        <div class="col-sm-6">
           <div class="input-group">
             <input type="text" name="pinHash" id="f-pinHash" value="$aFormData.pinHash" class="form-control" placeholder="" />
           </div>
@@ -57,7 +58,7 @@
     <div class="form-group">
       <label for="f-expiredAt" class="form-control-label">Время жизни сообщения</label>
       <div class="row">
-        <div class="col-sm-5">
+        <div class="col-sm-4">
           <div class="input-group">
             <input type="text" name="expiredAt" id="f-expiredAt" value="$aFormData.expiredAt" class="form-control" placeholder="$CONTROLLER.conf.defaultMessageTTL" />
             <span class="input-group-addon">минут</span>
