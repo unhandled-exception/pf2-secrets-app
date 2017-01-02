@@ -58,14 +58,14 @@ locals
   $lRes[^self._request[message/$aToken/$aPin;GET]]
   ^if($lRes.status eq "200" && ^lRes.[CONTENT-TYPE].match[application/json][in]
   ){
-#   Сохранили сообщение
+#   Загрузили сообщение
     $lData[^json:parse[^taint[as-is][$lRes.text]]]
     $result.token[$lData.token]
     $result.message[$lData.message]
   }($lRes.status eq "400"
     || $lRes.status eq "404"
   ){
-#   Ошибка при сохранении
+#   Ошибка при загрузке
     ^if(^lRes.[CONTENT-TYPE].match[application/json][in]){
       $lData[^json:parse[^taint[as-is][$lRes.text]]]
       $lError[$lData.error]
