@@ -20,7 +20,7 @@
 
 ## API
 
-Сайт предоставляет REST API для сохранения и загрузки сообщений.
+Для программистов на сайте работает REST API, чтобы сохранить и загрузить сообщение из программы.
 
 ### Зашифровать и сохранить сообщение на сервере
 
@@ -30,14 +30,14 @@
 - `pin` пин-код
 
 ```
-    $ http --form POST https://secrets.unhandled-exception.ru/api/v1/message pin=12345 message=testtest-12345678 exp=15
+$ http --form POST https://secrets.unhandled-exception.ru/api/v1/message pin=12345 message=testtest-12345678 exp=15
 
-    HTTP/1.1 201 Created
+HTTP/1.1 201 Created
 
-    {
-        "exp": "2016-12-13T22:01:25+03:00",
-        "token": "109a943d-c254-4306-bdab-2afaac78e94f"
-    }
+{
+  "exp": "2016-12-13T22:01:25+03:00",
+  "token": "109a943d-c254-4306-bdab-2afaac78e94f"
+}
 ```
 
 ### Загрузить сообщение
@@ -45,14 +45,14 @@
 `GET /api/v1/message/:token/:pin`
 
 ```
-    $ http GET https://secrets.unhandled-exception.ru/api/v1/message/109a943d-c254-4306-bdab-2afaac78e94f/12345
+$ http GET https://secrets.unhandled-exception.ru/api/v1/message/109a943d-c254-4306-bdab-2afaac78e94f/12345
 
-    HTTP/1.1 200 OK
+HTTP/1.1 200 OK
 
-    {
-        "token": "109a943d-c254-4306-bdab-2afaac78e94f",
-        "message": "testtest-12345678"
-    }
+{
+  "token": "109a943d-c254-4306-bdab-2afaac78e94f",
+  "message": "testtest-12345678"
+}
 ```
 
 ### Пинг
@@ -60,11 +60,11 @@
 `GET /api/v1/ping`
 
 ```
-    $ http https://secrets.unhandled-exception.ru/api/v1/ping
+$ http https://secrets.unhandled-exception.ru/api/v1/ping
 
-    HTTP/1.1 200 OK
+HTTP/1.1 200 OK
 
-    pong
+pong
 ```
 
 ### Получить настройки сервиса
@@ -72,13 +72,17 @@
 `GET /api/v1/params`
 
 ```
-    $ http https://secrets.unhandled-exception.ru/api/v1/params
+$ http https://secrets.unhandled-exception.ru/api/v1/params
 
-    HTTP/1.1 200 OK
+HTTP/1.1 200 OK
 
-    {
-        "min_exp_min": 10,
-        "max_pin_attempts": 3,
-        "min_pin_size": 5
-    }
+{
+  "min_exp_min": 10,
+  "max_pin_attempts": 3,
+  "min_pin_size": 5
+}
 ```
+
+## Библиотека API для Парсера
+
+Класс ueSecretsAPI лежит в [./lib/secrets_api.p](/lib/secrets_api.p). Пример работы с классом смотрите в [./lib/secrets_api_test.p](/lib/secrets_api_test.p).

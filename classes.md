@@ -31,3 +31,7 @@
 ### [./app/models/messages.p](./app/models/messages.p)
 * CoreMessages
 
+
+### [./lib/secrets_api.p](./lib/secrets_api.p)
+* ueSecretsAPI
+
