@@ -182,7 +182,6 @@ locals
   $lPinString[^math:digest[sha512;${aPin}${core.security.secretKey};$.format[base64]]]
 
   ^unsafe{
-    ^pfAssert:fail[stop]
 #   Пробуем хешировать через системный bcrypt (Blowfish). Есть во FreeBSD
     $result[^math:crypt[$lPinString;^self.ifdef[$aSalt]{^$2b^$10^$^math:uid64[]^math:uid64[]}]]
   }{
