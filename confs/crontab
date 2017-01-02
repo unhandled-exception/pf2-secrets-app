@@ -1,4 +1,4 @@
 SHELL=/bin/sh
 PATH=$PATH:/usr/home/pf2secrets/bin
 
-*/5	*	*	*	*	~/secrets.unhandled-exception.ru/app/manage.p secrets cleanup >> ~/secrets.unhandled-exception.ru/logs/secrets_cleanup.log
+*/5	*	*	*	*	~/secrets.unhandled-exception.ru/manage.p secrets cleanup >> ~/secrets.unhandled-exception.ru/logs/secrets_cleanup.log

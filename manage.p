@@ -1,12 +1,12 @@
 #!/usr/bin/env parser3
 
 @main[]
-  ^CLASS_PATH.append{./}
-  ^CLASS_PATH.append{/../vendor/}
+  ^CLASS_PATH.append{./app}
+  ^CLASS_PATH.append{./vendor/}
 
-  ^use[config/app_config.p]
+  ^use[app/config/app_config.p]
   ^pfClass:unsafe{
-    ^use[config/local_config.p]
+    ^use[app/config/local_config.p]
   }
 
   $csql[^pfSQLConnection::create[$CONF.connectString;
@@ -50,7 +50,7 @@ $confdir[^file:dirname[$filespec]]
 # Назначаем директорию со скриптом как рут для поиска
 $request:document-root[$confdir]
 
-$parserlibsdir[$confdir/../../bin]
+$parserlibsdir[$confdir/../bin]
 $charsetsdir[$parserlibsdir/charsets]
 $sqldriversdir[$parserlibsdir/lib]
 
