@@ -154,12 +154,14 @@ locals
 ## Шифрует текст сообщения с использованием pin-кода
   $result[^core.security.encrypt[$aData][
     $.cryptKey[^core.security.digest[${aPin}${core.security.cryptKey}]]
+    $.log[-- Encrypt a secret message.]
   ]]
 
 @decryptDataField[aData;aPin] -> [string]
 ## Расшифровывает текст сообщения с использованием pin-кода
   $result[^core.security.decrypt[$aData][
     $.cryptKey[^core.security.digest[${aPin}${core.security.cryptKey}]]
+    $.log[-- Decrypt a secret message.]
   ]]
 
 @fieldValue[aField;aValue]
