@@ -41,13 +41,15 @@ locals
     $lData[^json:parse[^taint[as-is][$lRes.text]]]
     $result.token[$lData.token]
     $result.expiredAt[$lData.exp]
-  }($lRes.status eq "400"){
+  }($lRes.status >= 400){
 #   Ошибка при сохранении
     ^if(^lRes.[CONTENT-TYPE].match[application/json][in]){
       $lData[^json:parse[^taint[as-is][$lRes.text]]]
       $lError[$lData.error]
-    }
-    ^throw[$self._exceptionType;$lError]
+    }{
+       $lError[$lRes.text]
+     }
+    ^throw[$self._exceptionType;Status: $lRes.status;$lError]
   }
 
 @load[aToken;aPin;aOptions] -> [$.token $.message]
@@ -62,15 +64,15 @@ locals
     $lData[^json:parse[^taint[as-is][$lRes.text]]]
     $result.token[$lData.token]
     $result.message[$lData.message]
-  }($lRes.status eq "400"
-    || $lRes.status eq "404"
-  ){
+  }($lRes.status >= 400){
 #   Ошибка при загрузке
     ^if(^lRes.[CONTENT-TYPE].match[application/json][in]){
       $lData[^json:parse[^taint[as-is][$lRes.text]]]
       $lError[$lData.error]
-    }
-    ^throw[$self._exceptionType;$lError]
+    }{
+       $lError[$lRes.text]
+     }
+    ^throw[$self._exceptionType;Status: $lRes.status;$lError]
   }
 
 @ping[] -> [bool]

@@ -57,7 +57,7 @@ pf2/lib/web/middleware.p
     $.minPinSize(5)
 
 #   Максимальное количество попыток ввода пин-кода
-    $.maxPinAttempts(3)
+    $.maxPinAttempts(20)
   ]
 
 # Если мы хотим временно переопределить в релизе какие-то параметры,
@@ -119,14 +119,5 @@ pf2/lib/web/middleware.p
     $.disableHTTPCache(true)
 #     $.appendSlash(true)
   ]
-
-  ^if($isDebug){
-    ^manager.assignMiddleware[pfDebugInfoMiddleware;
-      $.enable(true)
-      $.sql[$sql]
-      $.enableHighlightJS(true)
-#     $.hideQueryLog(true)
-    ]
-  }
 
   $result[$manager]

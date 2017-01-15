@@ -34,6 +34,8 @@
 ## aOptions.error
   ^cleanMethodArgument[aFormData;aOptions]
   <form action="$aOptions.action" method="post" class="message-form form-default">
+    ^REQUEST.CSRF.tokenField[]
+
     <div class="form-group ^if($aOptions.error.type eq "core.messages.empty.data"){has-danger}">
       <textarea name="data" id="f-data" class="form-control" rows="7" placeholder="Текст сообщения" />$aFormData.data</textarea>
       ^if($aOptions.error.type eq "core.messages.empty.data"){

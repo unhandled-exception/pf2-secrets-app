@@ -1,5 +1,6 @@
 @USE
 controllers/site/interface.p
+pf2/lib/web/middleware.p
 
 
 ## Главный контролер сайта
@@ -33,6 +34,25 @@ locals
     $.template[/api.pt]
     $.context[$.title[АПИ]]
   ]]
+
+  ^if($self.isDebug){
+    ^router.assignMiddleware[pfDebugInfoMiddleware;
+      $.enable(true)
+      $.sql[$core.CSQL]
+      $.enableHighlightJS(true)
+#     $.hideQueryLog(true)
+    ]
+  }
+
+# Мидлваре для защиты от CSRF-атак
+  ^router.assignMiddleware[pf2/lib/web/csrf.p@pfCSRFMiddleware;
+    $.cryptoProvider[$core.security]
+    $.cookieHTTPOnly(true)
+    $.cookieSecure(true)
+    $.pathExempt[
+      $.api[^^/api/v1]
+    ]
+  ]
 
 # Подключаем мидлваре для хранения зашифрованной сессий на клиенте
 # В сессию запишем токен зашифрованного сообщения, чтобы потом безопасно показать на странице /message/saved.
@@ -96,9 +116,7 @@ locals
 ## Показываем сообщение по ссылке
   $self.title[Прочитать секретное сообщение]
   ^if(!def $aRequest.token){^redirectTo[/]}
-  ^if($aRequest.isPOST
-    && ^self.antiFlood.validateRequest[$aRequest]
-  ){
+  ^if($aRequest.isPOST){
      $lMessage[^core.messages.load[$aRequest.token;$aRequest.pin]]
      ^if(!$lMessage.error){
        $self.title[Секретное сообщение]

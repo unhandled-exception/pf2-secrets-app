@@ -52,6 +52,8 @@
   ^cleanMethodArgument[aFormData;aOptions]
   $lInvalidPin($aOptions.error.type eq "message.invalid.pin")
   <form action="$aOptions.action" method="post" class="form-horizontal form-default">
+    ^REQUEST.CSRF.tokenField[]
+
     <div class="form-group row ^if($lInvalidPin){has-danger}">
       <div class="col-sm-6">
         <input type="text" name="pin" id="f-pin" value="$aFormData.pin" class="form-control" placeholder="Введите пин-код" />
@@ -60,7 +62,6 @@
         }
       </div>
     </div>
-    ^antiFlood.field[]
     <div class="form-group row">
       <div class="col-sm-6">
         <input type="submit" id="f-sub" value="Показать сообщение" class="btn btn-primary" />
