@@ -13,7 +13,7 @@
   $pin[^math:uid64[]]
   $exp[15]
 
-  $api[^ueSecretsAPI::create[]]
+  $api[^ueSecretsAPI::create[$.apiURL[https://b.secrets.unhandled-exception.ru/api/v1]]]
 
   Ping: ^if(^api.ping[]){true}{false}
 
