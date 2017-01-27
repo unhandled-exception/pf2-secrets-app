@@ -29,14 +29,14 @@ locals
   ]
 
 # Подключаем модуль и страницу с описанием API сайта
-  ^router.assignModule[/api/v1;controllers/site/api.p@APIController]
+  ^router.module[/api/v1;controllers/site/api.p@APIController]
   ^router.assign[/api;$.render[
     $.template[/api.pt]
     $.context[$.title[АПИ]]
   ]]
 
   ^if($self.isDebug){
-    ^router.assignMiddleware[pfDebugInfoMiddleware;
+    ^router.middleware[pfDebugInfoMiddleware;
       $.enable(true)
       $.sql[$core.CSQL]
       $.enableHighlightJS(true)
@@ -45,7 +45,7 @@ locals
   }
 
 # Мидлваре для защиты от CSRF-атак
-  ^router.assignMiddleware[pf2/lib/web/csrf.p@pfCSRFMiddleware;
+  ^router.middleware[pf2/lib/web/csrf.p@pfCSRFMiddleware;
     $.cryptoProvider[$core.security]
     $.cookieHTTPOnly(true)
     $.cookieSecure(true)
@@ -56,7 +56,7 @@ locals
 
 # Подключаем мидлваре для хранения зашифрованной сессий на клиенте
 # В сессию запишем токен зашифрованного сообщения, чтобы потом безопасно показать на странице /message/saved.
-  ^router.assignMiddleware[pf2/lib/web/middleware.p@pfSessionMiddleware;
+  ^router.middleware[pf2/lib/web/middleware.p@pfSessionMiddleware;
     $.cryptoProvider[$core.security]
     $.expires[session]
   ]

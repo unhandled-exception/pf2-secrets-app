@@ -114,8 +114,8 @@ pf2/lib/web/middleware.p
      $manager[^SiteManager::create[$manageraOptions]]
    }
 
-  ^manager.assignMiddleware[pfSecurityMiddleware;$aConf.security]
-  ^manager.assignMiddleware[pfCommonMiddleware;
+  ^manager.router.middleware[pfSecurityMiddleware;$aConf.security]
+  ^manager.router.middleware[pfCommonMiddleware;
     $.disableHTTPCache(true)
 #     $.appendSlash(true)
   ]
