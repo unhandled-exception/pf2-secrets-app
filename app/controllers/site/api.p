@@ -22,11 +22,11 @@ locals
   ^router.assign[message/:token/:pin;message]
 
 # Подключаем CORS-мидлваре к API-модулю
-  ^router.assignMiddleware[controllers/site/middleware.p@CORSMiddleware;
+  ^router.middleware[controllers/site/middleware.p@CORSMiddleware;
     $.applicationName[pf2-secrets]
   ]
 
-@postJSON[aResponse]
+@response<json>[aResponse]
 ## Постобработчик для ответов типа json
 ## Если нам пришел хеш, то преобразовываем его в json-строку
 ## Добавляем заголовок Content-Type: application/json
