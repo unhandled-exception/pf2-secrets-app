@@ -29,8 +29,8 @@ locals
   ]
 
 # Подключаем модуль и страницу с описанием API сайта
-  ^router.assignModule[api/v1;controllers/site/api.p@APIController]
-  ^router.assign[api;$.render[
+  ^router.assignModule[/api/v1;controllers/site/api.p@APIController]
+  ^router.assign[/api;$.render[
     $.template[/api.pt]
     $.context[$.title[АПИ]]
   ]]
@@ -61,7 +61,7 @@ locals
     $.expires[session]
   ]
 
-@onNOTFOUND[aRequest]
+@NOTFOUND[aRequest]
 ## Обработчик всех 404-страниц
 ## Вызываем, если не найден обработчик для марщрута или в обработчике вызвали ^abort(404)
   $self.title[Страница не найдена (404)]
@@ -70,7 +70,7 @@ locals
     $.body[^render[/404.pt]]
   ]
 
-@onINDEX[aRequest]
+@get->INDEX[aRequest]
 ## Главная страница сайта
   $self.title[Зашифровать и сохранить сообщение]
   ^if($aRequest.isPOST){
@@ -100,7 +100,7 @@ locals
     $.formData[$aRequest.form]
   ]
 
-@onMessageSaved[aRequest]
+@/message/saved[aRequest]
 ## Показываем ссылку на сохраненное сообщение
   $lMessage[$aRequest.session.message]
   ^if(!def $lMessage.token){^redirectTo[/]}
@@ -112,7 +112,7 @@ locals
     $.messageExpiredAt[$lMessage.expiredAt]
   ]]
 
-@onMessage[aRequest]
+@/message[aRequest]
 ## Показываем сообщение по ссылке
   $self.title[Прочитать секретное сообщение]
   ^if(!def $aRequest.token){^redirectTo[/]}

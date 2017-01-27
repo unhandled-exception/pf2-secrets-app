@@ -38,7 +38,7 @@ locals
     $result.body[^json:string[$result.body]]
   }
 
-@onNOTFOUND[aRequest]
+@NOTFOUND[aRequest]
 ## Выдаем свою сраниыку для 404-ошибке в формате JSON
   $result[
     $.status[404]
@@ -47,7 +47,7 @@ locals
     ]
   ]
 
-@onMessagePOST[aRequest]
+@post->/message[aRequest]
 ## Зашифровать и сохранить сообщение на сервере
 ## POST /api/v1/message, body - `pin=12345&message=testtest-12345678&exp=15
 ## message — сообщение
@@ -79,7 +79,7 @@ locals
      }
   }
 
-@onMessageGET[aRequest]
+@get->/message[aRequest]
 ## Загрузить сообщение
 ## GET /api/v1/message/:token/:pin
   $lMessage[^core.messages.load[$aRequest.token;$aRequest.pin]]
@@ -99,7 +99,7 @@ locals
      ]
    }
 
-@onPing[aRequest]
+@get->/ping[aRequest]
 ## Пинг
 ## GET /api/v1/ping
   $result[
@@ -107,7 +107,7 @@ locals
     $.body[pong]
   ]
 
-@onParams[aRequest]
+@get->/params[aRequest]
 ## Получить настройки сервиса
 ## GET /api/v1/params
   $result[
