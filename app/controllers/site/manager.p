@@ -70,7 +70,7 @@ locals
     $.body[^render[/404.pt]]
   ]
 
-@get->INDEX[aRequest]
+@INDEX[aRequest]
 ## Главная страница сайта
   $self.title[Зашифровать и сохранить сообщение]
   ^if($aRequest.isPOST){
