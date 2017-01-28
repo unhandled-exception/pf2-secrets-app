@@ -19,7 +19,7 @@ locals
 
   $self._defaultResponseType[json]
 
-  ^router.assign[message/:token/:pin;message]
+  ^router.assign[/message/:token/:pin;/message]
 
 # Подключаем CORS-мидлваре к API-модулю
   ^router.middleware[controllers/site/middleware.p@CORSMiddleware;

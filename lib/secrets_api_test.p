@@ -21,10 +21,10 @@
   Params: ^if($params){^params.foreach[k;v]{$k -> $v}[, ]}{none}
 
   $stored[^api.save[$message;$pin;$.exp[$exp]]]
-  Save message: $stored.token, $stored.expiredAt
+  Save a message: $stored.token, $stored.expiredAt
 
   $loaded[^api.load[$stored.token;$pin]]
-  Load message: $loaded.token, message is ^if($message eq $loaded.message){correct}{incorrect}
+  Load a message: $loaded.token, a message is ^if($message eq $loaded.message){correct}{incorrect}
 
 @postprocess[aBody]
   $result[^aBody.match[(?:\n\s*\n)+][gx][^#0A]^#0A]
