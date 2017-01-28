@@ -2,11 +2,11 @@
 controllers/site/interface.p
 
 
-## Контролер для режима обслуживания
-## Выдает на все запросы 503-ошибку
-
 @CLASS
 MaintenanceManager
+
+## Контролер для режима техобслуживания
+## Выдает на все запросы 503-ошибку
 
 @BASE
 SiteInterfaceModule
@@ -19,7 +19,7 @@ SiteInterfaceModule
   ]
   $self.conf[$aOptions.conf]
 
-@onINDEX[aRequest]
+@/DEFAULT[aRequest]
   $result[
     $.status[503]
     $.headers[
@@ -27,6 +27,3 @@ SiteInterfaceModule
     ]
     $.body[^render[maintenance.pt]]
   ]
-
-@onNOTFOUND[aRequest]
-  $result[^onINDEX[$aRequest]]
