@@ -10,18 +10,12 @@ pfController
 
 @create[aOptions]
 ## aOptions.core
-## aOptions.antiFlood
 ## aOptions.formater
 ## aOptions.isDebug(false)
   ^BASE:create[$aOptions]
 
   $self.isDebug(^aOptions.isDebug.bool(false))
   $self.core[$aOptions.core]
-
-  $self.antiFlood[$aOptions.antiFlood]
-  ^if(!^template.context.contains[antiFlood]){
-    ^template.assign[antiFlood;$antiFlood]
-  }
 
   $self._title[]
 

@@ -22,7 +22,7 @@ pfConsoleCommandWithSubcommands
   ^BASE:create[$aOptions]
   ^pfModelChainMixin:mixin[$self;$aOptions]
 
-  $self.binPath[commands/bin]
+  $self.binPath[app/commands/bin]
   $self.mysqldumpBin[$self.binPath/mysqldump]
 
   $lParsed[^pfString:parseURL[$CSQL.connectString]]

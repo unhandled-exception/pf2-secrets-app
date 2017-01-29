@@ -1,7 +1,6 @@
 @USE
 models/core.p
 controllers/site/manager.p
-pf2/lib/web/helpers/antiflood.p
 pf2/lib/web/middleware.p
 
 @auto[]
@@ -15,13 +14,6 @@ pf2/lib/web/middleware.p
 #    $.secretKey[--сгенерировать--]
 #    $.cryptKey[--сгенерировать--]
 
-    $.antiFlood[
-      $.storage[
-#        $.password[--сгенерировать--]
-        $.expires(60*60*24)
-      ]
-    ]
-
 #  Чтобы не держать пароли в публичном репозитории я вынес строки с паролями в local_config.p
 #  Многоточия заменил на пароли, сгенерированные командой:
 #  > python3 -c "import os, base64; print(base64.b64encode(os.urandom(32)))"
@@ -30,7 +22,6 @@ pf2/lib/web/middleware.p
 #  @auto[]
 #    $CONF.secretKey[...]
 #    $CONF.cryptKey[...]
-#    $CONF.antiFlood.storage.password[...]
 #    $CONF.connectString[mysql://secrets_ue:...@localhost/secrets_ue]
 #  #  $CONF.features.maintenanceMode(true)
 
@@ -89,18 +80,9 @@ pf2/lib/web/middleware.p
     $.sql[$sql]
   ]]
 
-  $antiFlood[^pfAntiFlood::create[
-    $.storage[^pfAntiFloodDBStorage::create[
-      ^hash::create[$aConf.antiFlood.storage]
-      $.cryptoProvider[$core.security]
-      $.sql[$sql]
-    ]]
-  ]]
-
   $manageraOptions[
     $.core[$core]
     $.sql[$sql]
-    $.antiFlood[$antiFlood]
     $.formater[$core.formater]
     $.templateFolder[/../../views/site]
     $.isDebug($isDebug)
