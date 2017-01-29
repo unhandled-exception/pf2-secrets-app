@@ -15,6 +15,7 @@ pfConsoleCommandWithSubcommands
 
 @auto[aFilespec]
   $self.SQL_COMMAND_ROOT[^file:dirname[$aFilespec]]
+  $self.SQL_COMMAND_BIN[^self.SQL_COMMAND_ROOT.match[^^(?:^taint[regex][$request:document-root])(.+?)^$][]{$match.1/bin}]
 
 @create[aOptions]
 ## aOptions.sql — ссылка на класс соединение с БД.
@@ -22,7 +23,7 @@ pfConsoleCommandWithSubcommands
   ^BASE:create[$aOptions]
   ^pfModelChainMixin:mixin[$self;$aOptions]
 
-  $self.binPath[app/commands/bin]
+  $self.binPath[$self.SQL_COMMAND_BIN]
   $self.mysqldumpBin[$self.binPath/mysqldump]
 
   $lParsed[^pfString:parseURL[$CSQL.connectString]]
