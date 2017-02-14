@@ -6,9 +6,6 @@
 ### [./app/commands/secrets.p](./app/commands/secrets.p)
 * SecretsCommand
 
-### [./app/commands/sql.p](./app/commands/sql.p)
-* SQLCommand
-
 ### [./app/controllers/site/api.p](./app/controllers/site/api.p)
 * APIController
 
