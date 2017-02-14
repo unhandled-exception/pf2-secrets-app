@@ -1,4 +1,0 @@
-User-agent: *
-Host: secrets.unhandled-exception.ru
-Disallow: /api
-Disallow: /message

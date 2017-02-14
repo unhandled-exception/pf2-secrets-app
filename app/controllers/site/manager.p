@@ -125,3 +125,18 @@ locals
      ^assignVar[messageForm;$aRequest.form]
   }
   ^render[message.pt]
+
+@/robots.txt[aRequest]
+## Показываем параметры роботам.
+## Это пример обработки статического маршрута с нестандартным типом ответа.
+  $lRobots[
+    User-agent: *
+    Host: $self.conf.host
+    Disallow: /api
+    Disallow: /message
+  ]
+  $result[
+    $.type[text]
+    $.contentType[text/plain]
+    $.body[^lRobots.match[^^\s+][gm][]]
+  ]
