@@ -34,7 +34,7 @@
     $.sql[$csql]
   ]
 
-  ^app.assignCommand[sql][commands/sql.p@SQLCommand][
+  ^app.assignCommand[sql;pf2/lib/console/commands/mysql.p@pfMySQLCommand;
     $.sql[$csql]
   ]
 
