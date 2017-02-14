@@ -26,7 +26,7 @@
   ][
     $.sql[$csql]
     $.core[$core]
-    $.formWidgets[bootstrap4]
+    $.formWidgets[bs4v]
   ]
 
   ^app.assignCommand[secrets;commands/secrets.p@SecretsCommand;
@@ -69,3 +69,14 @@ mysql	$sqldriversdir/libparser3mysql.so	libmysqlclient.so
 ]
 
 $CLASS_PATH[^table::create{path}]
+
+@unhandled_exception[exception;stack]
+# Показываем сообщение об ошибке
+Unhandled Exception^if(def $exception.type){ ($exception.type)}
+Source: $exception.source
+Comment: $exception.comment
+^if(def $exception.file){File: $exception.file ^(${exception.lineno}:$exception.colno^)}
+^if($stack){
+Stack trace:
+^stack.menu{$stack.name^#09$stack.file ^(${stack.lineno}:$stack.colno^)}[^#0A]
+}
