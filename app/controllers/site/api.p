@@ -38,8 +38,8 @@ locals
     $result.body[^json:string[$result.body]]
   }
 
-@/NOTFOUND[aRequest]
-## Выдаем свою сраниыку для 404-ошибке в формате JSON
+@catch<http.404>[aRequest;aException]
+## Выдаем свою сраничку для 404-ошибки в формате JSON
   $result[
     $.status[404]
     $.body[

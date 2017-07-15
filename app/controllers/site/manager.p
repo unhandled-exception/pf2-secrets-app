@@ -61,7 +61,7 @@ locals
     $.expires[session]
   ]
 
-@/NOTFOUND[aRequest]
+@catch<http.404>[aRequest;aException]
 ## Обработчик всех 404-страниц
 ## Вызываем, если не найден обработчик для марщрута или в обработчике вызвали ^abort(404)
   $self.title[Страница не найдена (404)]
@@ -70,7 +70,7 @@ locals
     $.body[^render[/404.pt]]
   ]
 
-@/INDEX[aRequest]
+@/[aRequest]
 ## Главная страница сайта
   $self.title[Зашифровать и сохранить сообщение]
   ^if($aRequest.isPOST){
