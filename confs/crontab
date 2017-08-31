@@ -1,4 +1,6 @@
+# m h  dom mon dow   command
+
 SHELL=/bin/sh
-PATH=$PATH:/usr/home/pf2secrets/bin
+PATH=$PATH:/home/pf2/bin
 
 */5	*	*	*	*	~/secrets.unhandled-exception.ru/manage.p secrets cleanup >> ~/secrets.unhandled-exception.ru/logs/secrets_cleanup.log
