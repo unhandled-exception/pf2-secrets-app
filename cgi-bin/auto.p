@@ -12,7 +12,7 @@ $CHARSETS[
 #change your client libraries paths to those on your system
 $SQL[
     $.drivers[^table::create{protocol	driver	client
-mysql	$sqldriversdir/libparser3mysql.so	/usr/lib/libmysqlclient.so
+mysql	$sqldriversdir/libparser3mysql.so	libmysqlclient.so
 #pgsql	$sqldriversdir/libparser3pgsql.so	-configure could not guess-
 #oracle	$sqldriversdir/libparser3oracle.so	-configure could not guess-
 #sqlite	$sqldriversdir/libparser3sqlite.so	-configure could not guess-
