@@ -80,7 +80,7 @@ pf2/lib/web/middleware.p
     $.sql[$sql]
   ]]
 
-  $manageraOptions[
+  $managerOptions[
     $.core[$core]
     $.sql[$sql]
     $.formater[$core.formater]
@@ -91,9 +91,9 @@ pf2/lib/web/middleware.p
 
   ^if($isMaintenanceMode){
     ^use[controllers/site/maintenance.p]
-    $manager[^MaintenanceManager::create[$manageraOptions]]
+    $manager[^MaintenanceManager::create[$managerOptions]]
   }{
-     $manager[^SiteManager::create[$manageraOptions]]
+     $manager[^SiteManager::create[$managerOptions]]
    }
 
   ^manager.router.middleware[pfSecurityMiddleware;$aConf.security]
